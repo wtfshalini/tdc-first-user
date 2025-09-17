@@ -35,3 +35,8 @@
 .slider:focus::-moz-range-thumb {
   box-shadow: 0 0 0 3px rgba(172, 113, 33, 0.3);
 }
+
+/* Dual Range Slider Styles */
+.border-3 {
+  border-width: 3px;
+}

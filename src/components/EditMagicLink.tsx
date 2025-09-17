@@ -465,76 +465,17 @@ const Step5: React.FC = () => {
             Age Range Preference <span className="text-red-500">*</span>
           </label>
           <p className="text-sm text-gray-600 mb-3">Select minimum and maximum preferred age.</p>
-          <div className="space-y-6 max-w-2xl">
-            {/* Min Age Slider */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="text-sm font-medium text-gray-700">Minimum Age</label>
-                <span className="text-lg font-semibold text-custom-amber">{minAge}</span>
-              </div>
-              <input
-                type="range"
-                min="21"
-                max="50"
-                value={minAge}
-                onChange={(e) => {
-                  const newMinAge = parseInt(e.target.value);
-                  setMinAge(newMinAge);
-                  // Ensure max age is always greater than min age
-                  if (newMinAge >= maxAge) {
-                    setMaxAge(newMinAge + 1);
-                  }
-                }}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                style={{
-                  background: `linear-gradient(to right, #AC7121 0%, #AC7121 ${((minAge - 21) / (50 - 21)) * 100}%, #e5e7eb ${((minAge - 21) / (50 - 21)) * 100}%, #e5e7eb 100%)`
-                }}
-                required
-              />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
-                <span>21</span>
-                <span>50</span>
-              </div>
-            </div>
-            
-            {/* Max Age Slider */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="text-sm font-medium text-gray-700">Maximum Age</label>
-                <span className="text-lg font-semibold text-custom-amber">{maxAge}</span>
-              </div>
-              <input
-                type="range"
-                min="21"
-                max="50"
-                value={maxAge}
-                onChange={(e) => {
-                  const newMaxAge = parseInt(e.target.value);
-                  setMaxAge(newMaxAge);
-                  // Ensure min age is always less than max age
-                  if (newMaxAge <= minAge) {
-                    setMinAge(newMaxAge - 1);
-                  }
-                }}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                style={{
-                  background: `linear-gradient(to right, #AC7121 0%, #AC7121 ${((maxAge - 21) / (50 - 21)) * 100}%, #e5e7eb ${((maxAge - 21) / (50 - 21)) * 100}%, #e5e7eb 100%)`
-                }}
-                required
-              />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
-                <span>21</span>
-                <span>50</span>
-              </div>
-            </div>
-            
-            {/* Age Range Summary */}
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-              <p className="text-sm text-amber-800">
-                <span className="font-medium">Selected Age Range:</span> {minAge} - {maxAge} years
-              </p>
-            </div>
-          </div>
+          <DualRangeSlider
+            min={21}
+            max={50}
+            minValue={minAge}
+            maxValue={maxAge}
+            onChange={(min, max) => {
+              setMinAge(min);
+              setMaxAge(max);
+            }}
+            label="years"
+          />
         </div>
       </div>
     </div>
@@ -1131,6 +1072,141 @@ const SelectionCard: React.FC<SelectionCardProps> = ({ title, icon: Icon, iconCo
         </span>
       </div>
     </button>
+  );
+};
+
+// Dual Range Slider Component
+interface DualRangeSliderProps {
+  min: number;
+  max: number;
+  minValue: number;
+  maxValue: number;
+  onChange: (min: number, max: number) => void;
+  label?: string;
+}
+
+const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
+  min,
+  max,
+  minValue,
+  maxValue,
+  onChange,
+  label = ''
+}) => {
+  const [isDragging, setIsDragging] = useState<'min' | 'max' | null>(null);
+  const sliderRef = React.useRef<HTMLDivElement>(null);
+
+  const getPercentage = (value: number) => ((value - min) / (max - min)) * 100;
+
+  const handleMouseDown = (type: 'min' | 'max') => (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(type);
+  };
+
+  const handleMouseMove = React.useCallback((e: MouseEvent) => {
+    if (!isDragging || !sliderRef.current) return;
+
+    const rect = sliderRef.current.getBoundingClientRect();
+    const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    const value = Math.round(min + (percentage / 100) * (max - min));
+
+    if (isDragging === 'min') {
+      const newMin = Math.min(value, maxValue - 1);
+      onChange(newMin, maxValue);
+    } else {
+      const newMax = Math.max(value, minValue + 1);
+      onChange(minValue, newMax);
+    }
+  }, [isDragging, min, max, minValue, maxValue, onChange]);
+
+  const handleMouseUp = React.useCallback(() => {
+    setIsDragging(null);
+  }, []);
+
+  React.useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
+
+  const minPercentage = getPercentage(minValue);
+  const maxPercentage = getPercentage(maxValue);
+
+  return (
+    <div className="w-full max-w-2xl">
+      {/* Value Display */}
+      <div className="relative mb-8">
+        <div 
+          className="absolute transform -translate-x-1/2"
+          style={{ left: `${minPercentage}%` }}
+        >
+          <div className="bg-custom-green text-white px-3 py-2 rounded-lg font-semibold text-sm shadow-lg">
+            {minValue} {label}
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-custom-green"></div>
+          </div>
+        </div>
+        <div 
+          className="absolute transform -translate-x-1/2"
+          style={{ left: `${maxPercentage}%` }}
+        >
+          <div className="bg-custom-green text-white px-3 py-2 rounded-lg font-semibold text-sm shadow-lg">
+            {maxValue} {label}
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-custom-green"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Slider Track */}
+      <div 
+        ref={sliderRef}
+        className="relative h-2 bg-gray-200 rounded-full cursor-pointer"
+      >
+        {/* Active Range */}
+        <div
+          className="absolute h-full bg-custom-amber rounded-full"
+          style={{
+            left: `${minPercentage}%`,
+            width: `${maxPercentage - minPercentage}%`
+          }}
+        />
+        
+        {/* Min Handle */}
+        <div
+          className={`absolute w-6 h-6 bg-white border-3 border-custom-amber rounded-full shadow-lg cursor-pointer transform -translate-x-1/2 -translate-y-1/2 top-1/2 transition-transform hover:scale-110 ${
+            isDragging === 'min' ? 'scale-125' : ''
+          }`}
+          style={{ left: `${minPercentage}%` }}
+          onMouseDown={handleMouseDown('min')}
+        />
+        
+        {/* Max Handle */}
+        <div
+          className={`absolute w-6 h-6 bg-white border-3 border-custom-amber rounded-full shadow-lg cursor-pointer transform -translate-x-1/2 -translate-y-1/2 top-1/2 transition-transform hover:scale-110 ${
+            isDragging === 'max' ? 'scale-125' : ''
+          }`}
+          style={{ left: `${maxPercentage}%` }}
+          onMouseDown={handleMouseDown('max')}
+        />
+      </div>
+
+      {/* Range Labels */}
+      <div className="flex justify-between text-xs text-gray-500 mt-2">
+        <span>{min}</span>
+        <span>{max}</span>
+      </div>
+
+      {/* Summary */}
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-4">
+        <p className="text-sm text-amber-800">
+          <span className="font-medium">Selected Age Range:</span> {minValue} - {maxValue} {label}
+        </p>
+      </div>
+    </div>
   );
 };
 
