@@ -406,51 +406,38 @@ const Step5: React.FC = () => {
         </div>
 
         {/* Minimum Income Preference */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-2">
-            Minimum Income Preference (LPA) <span className="text-red-500">*</span>
-          </label>
-          <p className="text-sm text-gray-600 mb-3">Enter minimum annual income (LPA) expected in a partner.</p>
-          <input
-            type="number"
-            value={minimumIncome}
-            onChange={(e) => setMinimumIncome(e.target.value)}
-            className="w-full max-w-xs px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-            placeholder="Enter minimum income in LPA"
-            min="0"
-            step="0.1"
-            required
-          />
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Minimum Income Preference */}
+          <div>
+            <label className="block text-lg font-medium text-gray-900 mb-2">
+              Minimum Income Preference (LPA) <span className="text-red-500">*</span>
+            </label>
+            <p className="text-sm text-gray-600 mb-3">Enter minimum annual income (LPA) expected in a partner.</p>
+            <input
+              type="number"
+              value={minimumIncome}
+              onChange={(e) => setMinimumIncome(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              placeholder="Enter minimum income in LPA"
+              min="0"
+              step="0.1"
+              required
+            />
+          </div>
 
-        {/* Height Range Preference */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-2">
-            Height Range Preference (cm) <span className="text-red-500">*</span>
-          </label>
-          <p className="text-sm text-gray-600 mb-3">Select minimum and maximum preferred height (in cm).</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Minimum Height Preference */}
+          <div>
+            <label className="block text-lg font-medium text-gray-900 mb-2">
+              Minimum Height Preference (cm) <span className="text-red-500">*</span>
+            </label>
+            <p className="text-sm text-gray-600 mb-3">Enter minimum preferred height (in cm).</p>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Min Height</label>
               <input
                 type="number"
                 value={minHeight}
                 onChange={(e) => setMinHeight(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Min height (cm)"
-                min="120"
-                max="250"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Max Height</label>
-              <input
-                type="number"
-                value={maxHeight}
-                onChange={(e) => setMaxHeight(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Max height (cm)"
+                placeholder="Enter minimum height in cm"
                 min="120"
                 max="250"
                 required
@@ -465,17 +452,19 @@ const Step5: React.FC = () => {
             Age Range Preference <span className="text-red-500">*</span>
           </label>
           <p className="text-sm text-gray-600 mb-3">Select minimum and maximum preferred age.</p>
-          <DualRangeSlider
-            min={21}
-            max={50}
-            minValue={minAge}
-            maxValue={maxAge}
-            onChange={(min, max) => {
-              setMinAge(min);
-              setMaxAge(max);
-            }}
-            label="years"
-          />
+          <div className="w-full">
+            <DualRangeSlider
+              min={21}
+              max={50}
+              minValue={minAge}
+              maxValue={maxAge}
+              onChange={(min, max) => {
+                setMinAge(min);
+                setMaxAge(max);
+              }}
+              label="years"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -1138,25 +1127,25 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
   const maxPercentage = getPercentage(maxValue);
 
   return (
-    <div className="w-full max-w-2xl">
+    <div className="w-full">
       {/* Value Display */}
-      <div className="relative mb-8">
+      <div className="relative mb-12">
         <div 
-          className="absolute transform -translate-x-1/2"
+          className="absolute transform -translate-x-1/2 -translate-y-full"
           style={{ left: `${minPercentage}%` }}
         >
-          <div className="bg-custom-green text-white px-3 py-2 rounded-lg font-semibold text-sm shadow-lg">
+          <div className="bg-custom-green text-white px-3 py-2 rounded-lg font-semibold text-sm shadow-lg mb-2">
             {minValue} {label}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-custom-green"></div>
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-custom-green"></div>
           </div>
         </div>
         <div 
-          className="absolute transform -translate-x-1/2"
+          className="absolute transform -translate-x-1/2 -translate-y-full"
           style={{ left: `${maxPercentage}%` }}
         >
-          <div className="bg-custom-green text-white px-3 py-2 rounded-lg font-semibold text-sm shadow-lg">
+          <div className="bg-custom-green text-white px-3 py-2 rounded-lg font-semibold text-sm shadow-lg mb-2">
             {maxValue} {label}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-custom-green"></div>
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-custom-green"></div>
           </div>
         </div>
       </div>
