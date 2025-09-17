@@ -1134,4 +1134,137 @@ const SelectionCard: React.FC<SelectionCardProps> = ({ title, icon: Icon, iconCo
   );
 };
 
+// Dual Range Slider Component
+interface DualRangeSliderProps {
+  min: number;
+  max: number;
+  minValue: number;
+  maxValue: number;
+  onChange: (min: number, max: number) => void;
+}
+
+const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
+  min,
+  max,
+  minValue,
+  maxValue,
+  onChange
+}) => {
+  const [isDragging, setIsDragging] = useState<'min' | 'max' | null>(null);
+  const sliderRef = React.useRef<HTMLDivElement>(null);
+
+  const getPercentage = (value: number) => ((value - min) / (max - min)) * 100;
+
+  const handleMouseDown = (type: 'min' | 'max') => (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(type);
+  };
+
+  const handleMouseMove = React.useCallback((e: MouseEvent) => {
+    if (!isDragging || !sliderRef.current) return;
+
+    const rect = sliderRef.current.getBoundingClientRect();
+    const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    const value = Math.round(min + (percentage / 100) * (max - min));
+
+    if (isDragging === 'min') {
+      const newMin = Math.min(value, maxValue - 1);
+      onChange(newMin, maxValue);
+    } else {
+      const newMax = Math.max(value, minValue + 1);
+      onChange(minValue, newMax);
+    }
+  }, [isDragging, min, max, minValue, maxValue, onChange]);
+
+  const handleMouseUp = React.useCallback(() => {
+    setIsDragging(null);
+  }, []);
+
+  React.useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
+
+  const minPercentage = getPercentage(minValue);
+  const maxPercentage = getPercentage(maxValue);
+
+  return (
+    <div className="w-full space-y-6">
+      {/* Value Display */}
+      <div className="flex justify-between items-center">
+        <div className="relative">
+          <div className="bg-custom-green text-white px-4 py-2 rounded-lg font-semibold text-lg">
+            {minValue}
+          </div>
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1">
+            <div className="w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-custom-green"></div>
+          </div>
+        </div>
+        <div className="relative">
+          <div className="bg-custom-green text-white px-4 py-2 rounded-lg font-semibold text-lg">
+            {maxValue}
+          </div>
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1">
+            <div className="w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-custom-green"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Slider Track */}
+      <div className="relative px-4">
+        <div
+          ref={sliderRef}
+          className="relative h-2 bg-gray-200 rounded-full cursor-pointer"
+        >
+          {/* Active Range */}
+          <div
+            className="absolute h-2 bg-custom-amber rounded-full"
+            style={{
+              left: `${minPercentage}%`,
+              width: `${maxPercentage - minPercentage}%`
+            }}
+          />
+          
+          {/* Min Handle */}
+          <div
+            className={`absolute w-6 h-6 bg-white border-4 border-custom-amber rounded-full cursor-grab transform -translate-y-2 -translate-x-3 shadow-lg transition-all duration-200 ${
+              isDragging === 'min' ? 'scale-110 cursor-grabbing' : 'hover:scale-105'
+            }`}
+            style={{ left: `${minPercentage}%` }}
+            onMouseDown={handleMouseDown('min')}
+          />
+          
+          {/* Max Handle */}
+          <div
+            className={`absolute w-6 h-6 bg-white border-4 border-custom-amber rounded-full cursor-grab transform -translate-y-2 -translate-x-3 shadow-lg transition-all duration-200 ${
+              isDragging === 'max' ? 'scale-110 cursor-grabbing' : 'hover:scale-105'
+            }`}
+            style={{ left: `${maxPercentage}%` }}
+            onMouseDown={handleMouseDown('max')}
+          />
+        </div>
+        
+        {/* Scale Labels */}
+        <div className="flex justify-between text-xs text-gray-500 mt-2">
+          <span>{min}</span>
+          <span>{max}</span>
+        </div>
+      </div>
+
+      {/* Age Range Summary */}
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+        <p className="text-sm text-amber-800">
+          <span className="font-medium">Selected Age Range:</span> {minValue} - {maxValue} years
+        </p>
+      </div>
+    </div>
+  );
+};
+
 export default EditMagicLink;
