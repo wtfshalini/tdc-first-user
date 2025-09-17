@@ -218,6 +218,17 @@ const Step1: React.FC = () => {
       currentCompany: '',
       designation: '',
       companyName: '',
+      annualIncome: ''
+    }
+    step2: {
+      undergraduateCollege: '',
+      undergraduateDegree: '',
+      postgraduateCollege: '',
+      postgraduateDegree: '',
+      professionalStatus: '',
+      currentCompany: '',
+      designation: '',
+      companyName: '',
       annualIncome: '',
     },
   const handleInputChange = (field: string, value: string) => {
