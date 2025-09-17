@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'custom-amber': '#AC7121',
+        'custom-amber': '#C3121F',
         'custom-green': '#065F4E',
       },
     },
