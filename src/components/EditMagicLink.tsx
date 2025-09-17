@@ -24,17 +24,6 @@ const EditMagicLink: React.FC<EditMagicLinkProps> = ({ onComplete }) => {
       setCurrentStep(currentStep - 1);
     }
   };
-    step2: {
-      undergraduateCollege: '',
-      undergraduateDegree: '',
-      postgraduateCollege: '',
-      postgraduateDegree: '',
-      professionalStatus: '',
-      currentCompany: '',
-      designation: '',
-      companyName: '',
-      annualIncome: ''
-    },
 
   const handleSettingsComplete = () => {
     // After Magic Link Settings, go to Verification Pending
