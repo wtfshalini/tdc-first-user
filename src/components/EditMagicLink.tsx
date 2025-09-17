@@ -195,7 +195,7 @@ const Step1: React.FC = () => {
     currentCountry: '',
     hometownCountry: '',
     currentCity: '',
-    hometown: ''
+    hometown: '',
     step2: {
       undergraduateCollege: '',
       undergraduateDegree: '',
