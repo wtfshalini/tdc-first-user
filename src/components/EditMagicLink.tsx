@@ -225,8 +225,8 @@ const Step5: React.FC = () => {
   const [minimumIncome, setMinimumIncome] = useState('');
   const [minHeight, setMinHeight] = useState('');
   const [maxHeight, setMaxHeight] = useState('');
-  const [minAge, setMinAge] = useState('');
-  const [maxAge, setMaxAge] = useState('');
+  const [minAge, setMinAge] = useState(21);
+  const [maxAge, setMaxAge] = useState(50);
 
   return (
     <div>
@@ -465,32 +465,74 @@ const Step5: React.FC = () => {
             Age Range Preference <span className="text-red-500">*</span>
           </label>
           <p className="text-sm text-gray-600 mb-3">Select minimum and maximum preferred age.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md">
+          <div className="space-y-6 max-w-2xl">
+            {/* Min Age Slider */}
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Min Age</label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-sm font-medium text-gray-700">Minimum Age</label>
+                <span className="text-lg font-semibold text-custom-amber">{minAge}</span>
+              </div>
               <input
-                type="number"
+                type="range"
+                min="21"
+                max="50"
                 value={minAge}
-                onChange={(e) => setMinAge(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Min age"
-                min="18"
-                max="100"
+                onChange={(e) => {
+                  const newMinAge = parseInt(e.target.value);
+                  setMinAge(newMinAge);
+                  // Ensure max age is always greater than min age
+                  if (newMinAge >= maxAge) {
+                    setMaxAge(newMinAge + 1);
+                  }
+                }}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                style={{
+                  background: `linear-gradient(to right, #AC7121 0%, #AC7121 ${((minAge - 21) / (50 - 21)) * 100}%, #e5e7eb ${((minAge - 21) / (50 - 21)) * 100}%, #e5e7eb 100%)`
+                }}
                 required
               />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>21</span>
+                <span>50</span>
+              </div>
             </div>
+            
+            {/* Max Age Slider */}
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Max Age</label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-sm font-medium text-gray-700">Maximum Age</label>
+                <span className="text-lg font-semibold text-custom-amber">{maxAge}</span>
+              </div>
               <input
-                type="number"
+                type="range"
+                min="21"
+                max="50"
                 value={maxAge}
-                onChange={(e) => setMaxAge(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Max age"
-                min="18"
-                max="100"
+                onChange={(e) => {
+                  const newMaxAge = parseInt(e.target.value);
+                  setMaxAge(newMaxAge);
+                  // Ensure min age is always less than max age
+                  if (newMaxAge <= minAge) {
+                    setMinAge(newMaxAge - 1);
+                  }
+                }}
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                style={{
+                  background: `linear-gradient(to right, #AC7121 0%, #AC7121 ${((maxAge - 21) / (50 - 21)) * 100}%, #e5e7eb ${((maxAge - 21) / (50 - 21)) * 100}%, #e5e7eb 100%)`
+                }}
                 required
               />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>21</span>
+                <span>50</span>
+              </div>
+            </div>
+            
+            {/* Age Range Summary */}
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+              <p className="text-sm text-amber-800">
+                <span className="font-medium">Selected Age Range:</span> {minAge} - {maxAge} years
+              </p>
             </div>
           </div>
         </div>
