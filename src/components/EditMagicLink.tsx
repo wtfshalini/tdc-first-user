@@ -208,18 +208,7 @@ const Step1: React.FC = () => {
     currentCity: '',
     hometown: ''
   });
-    },
-    step2: {
-      undergraduateCollege: '',
-      undergraduateDegree: '',
-      postgraduateCollege: '',
-      postgraduateDegree: '',
-      professionalStatus: '',
-      currentCompany: '',
-      designation: '',
-      companyName: '',
-      annualIncome: '',
-    },
+
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
