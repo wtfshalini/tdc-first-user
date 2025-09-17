@@ -1,5 +1,51 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, Mail, Video, Camera, Shield, AlertCircle, Coffee, Ban, Wine, Users, Baby, X, MessageCircle, Home, Plane, UserCheck, Target } from 'lucide-react';
+import { 
+  User, 
+  Mail, 
+  Phone, 
+  MapPin, 
+  Calendar, 
+  Heart, 
+  Briefcase, 
+  GraduationCap, 
+  Camera, 
+  Upload, 
+  ChevronLeft, 
+  ChevronRight,
+  Save,
+  Check,
+  AlertCircle,
+  FileText,
+  CreditCard,
+  Video,
+  Building,
+  DollarSign,
+  Users,
+  Globe,
+  Clock,
+  Target,
+  Star,
+  Coffee,
+  Music,
+  Book,
+  Plane,
+  Dumbbell,
+  Palette,
+  GameController2,
+  Utensils,
+  Film,
+  Mountain,
+  Camera as CameraIcon,
+  Headphones,
+  Bike,
+  TreePine,
+  Waves,
+  Sun,
+  Moon,
+  Zap,
+  Flower,
+  Sparkles
+} from 'lucide-react';
 
 interface EditMagicLinkProps {
   onComplete?: () => void;
@@ -7,496 +53,339 @@ interface EditMagicLinkProps {
 
 const EditMagicLink: React.FC<EditMagicLinkProps> = ({ onComplete }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 7;
-  const [currentPage, setCurrentPage] = useState<'form' | 'video-verification' | 'settings' | 'verification' | 'verification-complete'>('form');
-
-  const handleNext = () => {
-    if (currentStep < totalSteps) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      // After completing all 7 steps, go to Video Verification
-      setCurrentPage('video-verification');
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const handleSettingsComplete = () => {
-    // After Magic Link Settings, go to Verification Pending
-    setCurrentPage('verification');
-  };
-
-  const handleVideoVerificationComplete = () => {
-    // After video verification, go to Magic Link Settings
-    setCurrentPage('settings');
-  };
-
-  const handleVerificationComplete = () => {
-    // After verification, go to verification complete screen
-    setCurrentPage('verification-complete');
-  };
-
-  const handleVerificationCompleteNext = () => {
-    // After verification complete, redirect to dashboard
-    if (onComplete) {
-      onComplete();
-    }
-  };
-
-  // Render different pages based on current page state
-  if (currentPage === 'video-verification') {
-    return <VideoVerification onComplete={handleVideoVerificationComplete} onBack={() => setCurrentStep(7)} />;
-  }
-
-  if (currentPage === 'settings') {
-    return <MagicLinkSettings onComplete={handleSettingsComplete} />;
-  }
-
-  if (currentPage === 'verification') {
-    return <VerificationPending onComplete={handleVerificationComplete} setCurrentPage={setCurrentPage} />;
-  }
-
-  if (currentPage === 'verification-complete') {
-    return <VerificationCompleteScreen onComplete={handleVerificationCompleteNext} />;
-  }
-
-  // Main form with 7 steps
-  return (
-    <div className="flex-1 bg-gray-50 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 text-left">
-            Let's begin with your basic details
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600 text-left">
-            Tell us a bit about yourself to get started.
-          </p>
-        </div>
-
-        {/* Step Progress */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6 max-w-6xl mx-auto">
-            {[
-              { number: 1, label: 'Basic Details' },
-              { number: 2, label: 'Work & Education' },
-              { number: 3, label: 'Background' },
-              { number: 4, label: 'Lifestyle & Personality' },
-              { number: 5, label: 'Partner Preferences' },
-              { number: 6, label: 'Photos' },
-              { number: 7, label: 'Verification' }
-            ].map((step, index) => (
-              <React.Fragment key={step.number}>
-                <div className="flex flex-col items-center">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-white mb-3 ${
-                    currentStep === step.number
-                      ? 'bg-custom-amber'
-                      : currentStep > step.number
-                      ? 'bg-custom-green'
-                      : 'bg-gray-300 text-gray-600'
-                  }`}>
-                    {step.number}
-                  </div>
-                  <div className="text-center max-w-20">
-                    <span className={`text-sm font-medium leading-tight ${
-                      currentStep === step.number
-                        ? 'text-custom-amber'
-                        : currentStep > step.number
-                        ? 'text-custom-green'
-                        : 'text-gray-400'
-                    }`}>
-                      {step.label}
-                    </span>
-                  </div>
-                </div>
-                {index < 6 && (
-                  <div className="flex items-center justify-center mx-2 mt-6">
-                    <svg 
-                      className="w-4 h-4 text-gray-300" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-
-        {/* Form Content */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 mb-8">
-          {currentStep === 1 && <Step1 />}
-          {currentStep === 2 && <Step2 />}
-          {currentStep === 3 && <Step3 />}
-          {currentStep === 4 && <Step4 />}
-          {currentStep === 5 && <Step5 />}
-          {currentStep === 6 && <Step6 />}
-          {currentStep === 7 && <Step7 />}
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className="flex items-center justify-between">
-          <button
-            onClick={handlePrevious}
-            disabled={currentStep === 1}
-            className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-colors ${
-              currentStep === 1
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            }`}
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Previous</span>
-          </button>
-
-          {currentStep < totalSteps ? (
-            <button
-              onClick={handleNext}
-              className="flex items-center space-x-2 px-6 py-3 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium"
-            >
-              <span>Next</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          ) : (
-            <button
-              onClick={handleNext}
-              className="flex items-center space-x-2 px-6 py-3 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium"
-            >
-              <Check className="w-4 h-4" />
-              <span>Save</span>
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Placeholder step components - you can guide me on what each should contain
-const Step1: React.FC = () => {
   const [formData, setFormData] = useState({
+    // Step 1 - Basic Information
     firstName: '',
     lastName: '',
     email: '',
-    phoneNumber: '',
+    phone: '',
     dateOfBirth: '',
-    height: '',
     gender: '',
-    linkedinUrl: '',
-    instagramUrl: '',
-    twitterUrl: '',
-    currentCountry: '',
-    hometownCountry: '',
     currentCity: '',
     hometown: '',
+    // Step 2 - Education & Professional
     step2: {
       undergraduateCollege: '',
       undergraduateDegree: '',
       postgraduateCollege: '',
       postgraduateDegree: '',
       professionalStatus: '',
+      // Professional fields (conditional based on status)
       companyName: '',
       jobTitle: '',
       workExperience: '',
+      industry: '',
+      annualIncome: '',
       businessName: '',
       businessType: '',
       businessExperience: '',
+      businessIncome: '',
+      freelanceServices: '',
+      freelanceExperience: '',
+      freelanceIncome: '',
       unemploymentReason: '',
+      jobSearchStatus: '',
       lastJobTitle: '',
-      lastCompanyName: '',
-      unemploymentDuration: '',
       retirementAge: '',
-      lastJobTitle2: '',
-      lastCompanyName2: '',
-      pensionDetails: '',
-      currentEducation: '',
-      educationInstitution: '',
-      expectedGraduation: '',
-      previousEducation: '',
-      homemakerDuration: '',
+      retirementIncome: '',
       previousCareer: '',
-      familySupport: '',
-      dailyActivities: ''
+      studentInstitution: '',
+      studyField: '',
+      expectedGraduation: '',
+      partTimeWork: ''
+    },
+    // Step 3 - Personal Details
+    step3: {
+      height: '',
+      bodyType: '',
+      smokingHabits: '',
+      drinkingHabits: '',
+      dietaryPreferences: '',
+      exerciseFrequency: '',
+      relationshipHistory: '',
+      hasChildren: '',
+      wantsChildren: '',
+      religiousBeliefs: '',
+      politicalViews: '',
+      languages: []
+    },
+    // Step 4 - Lifestyle & Interests
+    step4: {
+      hobbies: [],
+      musicPreferences: [],
+      movieGenres: [],
+      travelFrequency: '',
+      favoriteDestinations: [],
+      socialMediaUsage: '',
+      weekendActivities: [],
+      personalityType: '',
+      communicationStyle: '',
+      conflictResolution: ''
+    },
+    // Step 5 - Partner Preferences
+    step5: {
+      ageRangeMin: '',
+      ageRangeMax: '',
+      preferredLocation: '',
+      educationPreference: '',
+      professionPreference: '',
+      incomePreference: '',
+      heightPreference: '',
+      bodyTypePreference: '',
+      smokingPreference: '',
+      drinkingPreference: '',
+      religionPreference: '',
+      childrenPreference: '',
+      dealBreakers: []
+    },
+    // Step 6 - About Me & Photos
+    step6: {
+      aboutMe: '',
+      lookingFor: '',
+      perfectDate: '',
+      lifeGoals: '',
+      photos: [],
+      profilePhoto: null
     }
   });
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const totalSteps = 6;
+
+  const handleInputChange = (field: string, value: any, step?: string) => {
+    setFormData(prev => {
+      if (step) {
+        return {
+          ...prev,
+          [step]: {
+            ...prev[step as keyof typeof prev],
+            [field]: value
+          }
+        };
+      }
+      return {
+        ...prev,
+        [field]: value
+      };
+    });
+
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({
+        ...prev,
+        [field]: ''
+      }));
+    }
   };
 
-  const countries = [
-    'United States', 'Canada', 'United Kingdom', 'Australia', 'Germany', 
-    'France', 'Italy', 'Spain', 'Netherlands', 'Sweden', 'Norway', 'Denmark',
-    'India', 'China', 'Japan', 'South Korea', 'Singapore', 'Malaysia',
-    'Brazil', 'Argentina', 'Mexico', 'South Africa', 'Egypt', 'Nigeria'
-  ];
+  const validateStep = (step: number): boolean => {
+    const newErrors: Record<string, string> = {};
 
-  const cities = [
-    'New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia',
-    'Toronto', 'Vancouver', 'Montreal', 'London', 'Manchester', 'Birmingham',
-    'Sydney', 'Melbourne', 'Brisbane', 'Berlin', 'Munich', 'Hamburg',
-    'Paris', 'Lyon', 'Marseille', 'Rome', 'Milan', 'Naples',
-    'Madrid', 'Barcelona', 'Valencia', 'Amsterdam', 'Rotterdam', 'The Hague',
-    'Stockholm', 'Gothenburg', 'Oslo', 'Copenhagen', 'Mumbai', 'Delhi',
-    'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Tokyo', 'Osaka',
-    'Seoul', 'Singapore', 'Kuala Lumpur', 'São Paulo', 'Rio de Janeiro',
-    'Buenos Aires', 'Mexico City', 'Cape Town', 'Johannesburg', 'Cairo'
-  ];
+    switch (step) {
+      case 1:
+        if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
+        if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
+        if (!formData.email.trim()) newErrors.email = 'Email is required';
+        if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
+        if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
+        if (!formData.gender) newErrors.gender = 'Gender is required';
+        if (!formData.currentCity.trim()) newErrors.currentCity = 'Current city is required';
+        break;
+      case 2:
+        if (!formData.step2.undergraduateCollege.trim()) newErrors.undergraduateCollege = 'Undergraduate college is required';
+        if (!formData.step2.undergraduateDegree.trim()) newErrors.undergraduateDegree = 'Undergraduate degree is required';
+        if (!formData.step2.professionalStatus) newErrors.professionalStatus = 'Professional status is required';
+        
+        // Validate conditional fields based on professional status
+        if (formData.step2.professionalStatus === 'employed') {
+          if (!formData.step2.companyName.trim()) newErrors.companyName = 'Company name is required';
+          if (!formData.step2.jobTitle.trim()) newErrors.jobTitle = 'Job title is required';
+          if (!formData.step2.workExperience) newErrors.workExperience = 'Work experience is required';
+          if (!formData.step2.industry) newErrors.industry = 'Industry is required';
+          if (!formData.step2.annualIncome) newErrors.annualIncome = 'Annual income is required';
+        } else if (formData.step2.professionalStatus === 'business-owner') {
+          if (!formData.step2.businessName.trim()) newErrors.businessName = 'Business name is required';
+          if (!formData.step2.businessType) newErrors.businessType = 'Business type is required';
+          if (!formData.step2.businessExperience) newErrors.businessExperience = 'Business experience is required';
+          if (!formData.step2.businessIncome) newErrors.businessIncome = 'Business income is required';
+        } else if (formData.step2.professionalStatus === 'freelancer') {
+          if (!formData.step2.freelanceServices.trim()) newErrors.freelanceServices = 'Freelance services are required';
+          if (!formData.step2.freelanceExperience) newErrors.freelanceExperience = 'Freelance experience is required';
+          if (!formData.step2.freelanceIncome) newErrors.freelanceIncome = 'Freelance income is required';
+        } else if (formData.step2.professionalStatus === 'unemployed') {
+          if (!formData.step2.unemploymentReason.trim()) newErrors.unemploymentReason = 'Unemployment reason is required';
+          if (!formData.step2.jobSearchStatus) newErrors.jobSearchStatus = 'Job search status is required';
+        } else if (formData.step2.professionalStatus === 'retired') {
+          if (!formData.step2.retirementAge) newErrors.retirementAge = 'Retirement age is required';
+          if (!formData.step2.previousCareer.trim()) newErrors.previousCareer = 'Previous career is required';
+        } else if (formData.step2.professionalStatus === 'student') {
+          if (!formData.step2.studentInstitution.trim()) newErrors.studentInstitution = 'Institution is required';
+          if (!formData.step2.studyField.trim()) newErrors.studyField = 'Field of study is required';
+          if (!formData.step2.expectedGraduation) newErrors.expectedGraduation = 'Expected graduation is required';
+        }
+        break;
+      // Add validation for other steps as needed
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNext = () => {
+    if (validateStep(currentStep)) {
+      setCurrentStep(prev => Math.min(prev + 1, totalSteps));
+    }
+  };
+
+  const handlePrevious = () => {
+    setCurrentStep(prev => Math.max(prev - 1, 1));
+  };
+
+  const handleSubmit = async () => {
+    if (!validateStep(currentStep)) return;
+
+    setIsSubmitting(true);
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setSubmitSuccess(true);
+      setTimeout(() => {
+        if (onComplete) {
+          onComplete();
+        }
+      }, 1500);
+    } catch (error) {
+      console.error('Submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const renderStepIndicator = () => (
+    <div className="mb-8">
+      <div className="flex items-center justify-between mb-4">
+        {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
+          <div key={step} className="flex items-center">
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                step < currentStep
+                  ? 'bg-custom-green text-white'
+                  : step === currentStep
+                  ? 'bg-custom-amber text-white'
+                  : 'bg-gray-200 text-gray-600'
+              }`}
+            >
+              {step < currentStep ? <Check className="w-4 h-4" /> : step}
+            </div>
+            {step < totalSteps && (
+              <div
+                className={`w-12 h-1 mx-2 ${
+                  step < currentStep ? 'bg-custom-green' : 'bg-gray-200'
+                }`}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="text-center">
+        <span className="text-sm text-gray-600">
+          Step {currentStep} of {totalSteps}
+        </span>
+      </div>
+    </div>
+  );
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 1:
+        return <Step1 formData={formData} onChange={handleInputChange} errors={errors} />;
+      case 2:
+        return <Step2 formData={formData} onChange={handleInputChange} errors={errors} />;
+      case 3:
+        return <Step3 formData={formData} onChange={handleInputChange} errors={errors} />;
+      case 4:
+        return <Step4 formData={formData} onChange={handleInputChange} errors={errors} />;
+      case 5:
+        return <Step5 formData={formData} onChange={handleInputChange} errors={errors} />;
+      case 6:
+        return <Step6 formData={formData} onChange={handleInputChange} errors={errors} />;
+      default:
+        return null;
+    }
+  };
+
+  if (submitSuccess) {
+    return (
+      <div className="flex-1 bg-gray-50 flex items-center justify-center p-8">
+        <div className="bg-white rounded-xl p-8 text-center max-w-md w-full shadow-lg">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Check className="w-8 h-8 text-green-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Profile Submitted!</h2>
+          <p className="text-gray-600 mb-6">
+            Your Magic Link profile has been submitted for review. Our team will verify your details and activate your profile soon.
+          </p>
+          <div className="text-sm text-gray-500">
+            Redirecting to dashboard...
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      {/* Name Fields */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            First Name <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            value={formData.firstName}
-            onChange={(e) => handleInputChange('firstName', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-            placeholder="Enter your first name"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Last Name <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            value={formData.lastName}
-            onChange={(e) => handleInputChange('lastName', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-            placeholder="Enter your last name"
-            required
-          />
-        </div>
-      </div>
-
-      {/* Email and Phone */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Email <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="email"
-            value={formData.email}
-            onChange={(e) => handleInputChange('email', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-            placeholder="Enter your email address"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Phone Number <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="tel"
-            value={formData.phoneNumber}
-            onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-            placeholder="Enter your phone number"
-            required
-          />
-        </div>
-      </div>
-
-      {/* Date of Birth and Height */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Date of Birth <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="date"
-            value={formData.dateOfBirth}
-            onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Height (in cm) <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="number"
-            value={formData.height}
-            onChange={(e) => handleInputChange('height', e.target.value)}
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-            placeholder="Enter your height"
-            min="120"
-            max="250"
-            required
-          />
-        </div>
-      </div>
-
-      {/* Gender Selection */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-4">
-          Gender <span className="text-red-500">*</span>
-        </label>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label className="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-            <input
-              type="radio"
-              name="gender"
-              value="male"
-              checked={formData.gender === 'male'}
-              onChange={(e) => handleInputChange('gender', e.target.value)}
-              className="w-4 h-4 text-custom-amber focus:ring-custom-amber border-gray-300"
-            />
-            <span className="ml-3 text-gray-900 font-medium">Male</span>
-          </label>
-          <label className="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-            <input
-              type="radio"
-              name="gender"
-              value="female"
-              checked={formData.gender === 'female'}
-              onChange={(e) => handleInputChange('gender', e.target.value)}
-              className="w-4 h-4 text-custom-amber focus:ring-custom-amber border-gray-300"
-            />
-            <span className="ml-3 text-gray-900 font-medium">Female</span>
-          </label>
-        </div>
-      </div>
-
-      {/* Social Media Links */}
-      <div className="space-y-6">
-        <h3 className="text-lg font-medium text-gray-900">Social Media Profiles</h3>
-        
-        {/* LinkedIn and Instagram */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Your LinkedIn ID Link
-            </label>
-            <input
-              type="url"
-              value={formData.linkedinUrl}
-              onChange={(e) => handleInputChange('linkedinUrl', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              placeholder="Enter your LinkedIn profile URL"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Your Instagram Id Link
-            </label>
-            <input
-              type="url"
-              value={formData.instagramUrl}
-              onChange={(e) => handleInputChange('instagramUrl', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              placeholder="Enter your Instagram profile URL"
-            />
-          </div>
+    <div className="flex-1 bg-gray-50 p-4 sm:p-6 lg:p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Create Your Magic Link Profile</h1>
+          <p className="text-sm sm:text-base text-gray-600">Complete all steps to create your personalized dating profile</p>
         </div>
 
-        {/* Twitter */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Your X (Twitter) Id Link
-            </label>
-            <input
-              type="url"
-              value={formData.twitterUrl}
-              onChange={(e) => handleInputChange('twitterUrl', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              placeholder="Enter your Twitter profile URL"
-            />
-          </div>
-          <div></div>
-        </div>
-      </div>
+        {renderStepIndicator()}
 
-      {/* Location Information */}
-      <div className="space-y-6">
-        <h3 className="text-lg font-medium text-gray-900">Location Information</h3>
-        
-        {/* Current Country and Hometown Country */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Current Country <span className="text-red-500">*</span>
-            </label>
-            <select
-              value={formData.currentCountry}
-              onChange={(e) => handleInputChange('currentCountry', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              required
+        <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 shadow-sm">
+          {renderStep()}
+
+          <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
+            <button
+              onClick={handlePrevious}
+              disabled={currentStep === 1}
+              className="flex items-center space-x-2 px-4 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              <option value="">Pick your current country</option>
-              {countries.map(country => (
-                <option key={country} value={country}>{country}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Hometown Country <span className="text-red-500">*</span>
-            </label>
-            <select
-              value={formData.hometownCountry}
-              onChange={(e) => handleInputChange('hometownCountry', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              required
-            >
-              <option value="">Pick your hometown country</option>
-              {countries.map(country => (
-                <option key={country} value={country}>{country}</option>
-              ))}
-            </select>
-          </div>
-        </div>
+              <ChevronLeft className="w-4 h-4" />
+              <span>Previous</span>
+            </button>
 
-        {/* Current City and Hometown */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Current City <span className="text-red-500">*</span>
-            </label>
-            <select
-              value={formData.currentCity}
-              onChange={(e) => handleInputChange('currentCity', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              required
-            >
-              <option value="">Pick your current city</option>
-              {cities.map(city => (
-                <option key={city} value={city}>{city}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Hometown <span className="text-red-500">*</span>
-            </label>
-            <select
-              value={formData.hometown}
-              onChange={(e) => handleInputChange('hometown', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              required
-            >
-              <option value="">Pick your hometown</option>
-              {cities.map(city => (
-                <option key={city} value={city}>{city}</option>
-              ))}
-            </select>
+            {currentStep === totalSteps ? (
+              <button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="flex items-center space-x-2 px-6 py-2 bg-custom-green text-white rounded-lg hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Submitting...</span>
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4" />
+                    <span>Submit Profile</span>
+                  </>
+                )}
+              </button>
+            ) : (
+              <button
+                onClick={handleNext}
+                className="flex items-center space-x-2 px-4 py-2 bg-custom-amber text-white rounded-lg hover:bg-opacity-90 transition-colors"
+              >
+                <span>Next</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -504,1356 +393,960 @@ const Step1: React.FC = () => {
   );
 };
 
-interface Step2Props {
-  data: any;
-  onChange: (data: any) => void;
-  onNext: () => void;
-  onPrev: () => void;
-}
+// Step 1 Component
+const Step1: React.FC<{
+  formData: any;
+  onChange: (field: string, value: any) => void;
+  errors: Record<string, string>;
+}> = ({ formData, onChange, errors }) => {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Basic Information</h2>
+        <p className="text-gray-600 mb-6">Let's start with your basic details</p>
+      </div>
 
-const Step2: React.FC<Step2Props> = ({ data, onChange, onNext, onPrev }) => {
-  const handleInputChange = (field: string, value: string) => {
-    onChange({ ...data, [field]: value });
-  };
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            First Name *
+          </label>
+          <div className="relative">
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              value={formData.firstName}
+              onChange={(e) => onChange('firstName', e.target.value)}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                errors.firstName ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+              }`}
+              placeholder="Enter your first name"
+            />
+          </div>
+          {errors.firstName && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {errors.firstName}
+            </p>
+          )}
+        </div>
 
-  const handleProfessionalStatusChange = (status: string) => {
-    // Clear conditional fields when status changes
-    const updatedData = {
-      ...data,
-      professionalStatus: status,
-      currentCompany: '',
-      designation: '',
-      companyName: '',
-    };
-    onChange(updatedData);
-  };
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Last Name *
+          </label>
+          <div className="relative">
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              value={formData.lastName}
+              onChange={(e) => onChange('lastName', e.target.value)}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                errors.lastName ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+              }`}
+              placeholder="Enter your last name"
+            />
+          </div>
+          {errors.lastName && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {errors.lastName}
+            </p>
+          )}
+        </div>
 
-  const renderConditionalFields = () => {
-    switch (data.professionalStatus) {
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Email Address *
+          </label>
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) => onChange('email', e.target.value)}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                errors.email ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+              }`}
+              placeholder="Enter your email address"
+            />
+          </div>
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {errors.email}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Phone Number *
+          </label>
+          <div className="relative">
+            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="tel"
+              value={formData.phone}
+              onChange={(e) => onChange('phone', e.target.value)}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                errors.phone ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+              }`}
+              placeholder="Enter your phone number"
+            />
+          </div>
+          {errors.phone && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {errors.phone}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Date of Birth *
+          </label>
+          <div className="relative">
+            <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="date"
+              value={formData.dateOfBirth}
+              onChange={(e) => onChange('dateOfBirth', e.target.value)}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                errors.dateOfBirth ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+              }`}
+            />
+          </div>
+          {errors.dateOfBirth && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {errors.dateOfBirth}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Gender *
+          </label>
+          <select
+            value={formData.gender}
+            onChange={(e) => onChange('gender', e.target.value)}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+              errors.gender ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+            }`}
+          >
+            <option value="">Select your gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="non-binary">Non-binary</option>
+            <option value="prefer-not-to-say">Prefer not to say</option>
+          </select>
+          {errors.gender && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {errors.gender}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Current City *
+          </label>
+          <div className="relative">
+            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              value={formData.currentCity}
+              onChange={(e) => onChange('currentCity', e.target.value)}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                errors.currentCity ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+              }`}
+              placeholder="Enter your current city"
+            />
+          </div>
+          {errors.currentCity && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {errors.currentCity}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Hometown
+          </label>
+          <div className="relative">
+            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              value={formData.hometown}
+              onChange={(e) => onChange('hometown', e.target.value)}
+              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              placeholder="Enter your hometown"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Step 2 Component
+const Step2: React.FC<{
+  formData: any;
+  onChange: (field: string, value: any, step?: string) => void;
+  errors: Record<string, string>;
+}> = ({ formData, onChange, errors }) => {
+  const professionalStatus = formData.step2.professionalStatus;
+
+  const renderProfessionalFields = () => {
+    switch (professionalStatus) {
       case 'employed':
         return (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Current Company <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={data.currentCompany}
-                  onChange={(e) => handleInputChange('currentCompany', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                  placeholder="Enter company name"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Designation <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={data.designation}
-                  onChange={(e) => handleInputChange('designation', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                  placeholder="Enter designation"
-                  required
-                />
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Annual Income (in LPA) <span className="text-red-500">*</span>
+                Company Name *
               </label>
-              <input
-                type="number"
-                value={data.annualIncome}
-                onChange={(e) => handleInputChange('annualIncome', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter income"
-                required
-              />
+              <div className="relative">
+                <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  value={formData.step2.companyName}
+                  onChange={(e) => onChange('companyName', e.target.value, 'step2')}
+                  className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                    errors.companyName ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                  }`}
+                  placeholder="Enter your company name"
+                />
+              </div>
+              {errors.companyName && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.companyName}
+                </p>
+              )}
             </div>
-          </>
-        );
-      case 'business':
-        return (
-          <>
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Company Name <span className="text-red-500">*</span>
+                Job Title *
+              </label>
+              <div className="relative">
+                <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  value={formData.step2.jobTitle}
+                  onChange={(e) => onChange('jobTitle', e.target.value, 'step2')}
+                  className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                    errors.jobTitle ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                  }`}
+                  placeholder="Enter your job title"
+                />
+              </div>
+              {errors.jobTitle && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.jobTitle}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Work Experience *
+              </label>
+              <select
+                value={formData.step2.workExperience}
+                onChange={(e) => onChange('workExperience', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.workExperience ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+              >
+                <option value="">Select experience</option>
+                <option value="0-1">0-1 years</option>
+                <option value="1-3">1-3 years</option>
+                <option value="3-5">3-5 years</option>
+                <option value="5-10">5-10 years</option>
+                <option value="10+">10+ years</option>
+              </select>
+              {errors.workExperience && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.workExperience}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Industry *
+              </label>
+              <select
+                value={formData.step2.industry}
+                onChange={(e) => onChange('industry', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.industry ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+              >
+                <option value="">Select industry</option>
+                <option value="technology">Technology</option>
+                <option value="finance">Finance</option>
+                <option value="healthcare">Healthcare</option>
+                <option value="education">Education</option>
+                <option value="marketing">Marketing</option>
+                <option value="consulting">Consulting</option>
+                <option value="manufacturing">Manufacturing</option>
+                <option value="retail">Retail</option>
+                <option value="other">Other</option>
+              </select>
+              {errors.industry && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.industry}
+                </p>
+              )}
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Annual Income *
+              </label>
+              <select
+                value={formData.step2.annualIncome}
+                onChange={(e) => onChange('annualIncome', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.annualIncome ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+              >
+                <option value="">Select income range</option>
+                <option value="0-3">₹0 - ₹3 LPA</option>
+                <option value="3-5">₹3 - ₹5 LPA</option>
+                <option value="5-10">₹5 - ₹10 LPA</option>
+                <option value="10-15">₹10 - ₹15 LPA</option>
+                <option value="15-25">₹15 - ₹25 LPA</option>
+                <option value="25-50">₹25 - ₹50 LPA</option>
+                <option value="50+">₹50+ LPA</option>
+              </select>
+              {errors.annualIncome && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.annualIncome}
+                </p>
+              )}
+            </div>
+          </div>
+        );
+
+      case 'business-owner':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Business Name *
+              </label>
+              <div className="relative">
+                <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  value={formData.step2.businessName}
+                  onChange={(e) => onChange('businessName', e.target.value, 'step2')}
+                  className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                    errors.businessName ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                  }`}
+                  placeholder="Enter your business name"
+                />
+              </div>
+              {errors.businessName && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.businessName}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Business Type *
+              </label>
+              <select
+                value={formData.step2.businessType}
+                onChange={(e) => onChange('businessType', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.businessType ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+              >
+                <option value="">Select business type</option>
+                <option value="sole-proprietorship">Sole Proprietorship</option>
+                <option value="partnership">Partnership</option>
+                <option value="private-limited">Private Limited</option>
+                <option value="public-limited">Public Limited</option>
+                <option value="llp">LLP</option>
+                <option value="other">Other</option>
+              </select>
+              {errors.businessType && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.businessType}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Business Experience *
+              </label>
+              <select
+                value={formData.step2.businessExperience}
+                onChange={(e) => onChange('businessExperience', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.businessExperience ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+              >
+                <option value="">Select experience</option>
+                <option value="0-1">0-1 years</option>
+                <option value="1-3">1-3 years</option>
+                <option value="3-5">3-5 years</option>
+                <option value="5-10">5-10 years</option>
+                <option value="10+">10+ years</option>
+              </select>
+              {errors.businessExperience && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.businessExperience}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Business Income *
+              </label>
+              <select
+                value={formData.step2.businessIncome}
+                onChange={(e) => onChange('businessIncome', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.businessIncome ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+              >
+                <option value="">Select income range</option>
+                <option value="0-5">₹0 - ₹5 LPA</option>
+                <option value="5-10">₹5 - ₹10 LPA</option>
+                <option value="10-25">₹10 - ₹25 LPA</option>
+                <option value="25-50">₹25 - ₹50 LPA</option>
+                <option value="50-100">₹50 - ₹100 LPA</option>
+                <option value="100+">₹100+ LPA</option>
+              </select>
+              {errors.businessIncome && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.businessIncome}
+                </p>
+              )}
+            </div>
+          </div>
+        );
+
+      case 'freelancer':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Freelance Services *
+              </label>
+              <textarea
+                value={formData.step2.freelanceServices}
+                onChange={(e) => onChange('freelanceServices', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.freelanceServices ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+                placeholder="Describe the services you offer"
+                rows={3}
+              />
+              {errors.freelanceServices && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.freelanceServices}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Freelance Experience *
+              </label>
+              <select
+                value={formData.step2.freelanceExperience}
+                onChange={(e) => onChange('freelanceExperience', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.freelanceExperience ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+              >
+                <option value="">Select experience</option>
+                <option value="0-1">0-1 years</option>
+                <option value="1-3">1-3 years</option>
+                <option value="3-5">3-5 years</option>
+                <option value="5-10">5-10 years</option>
+                <option value="10+">10+ years</option>
+              </select>
+              {errors.freelanceExperience && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.freelanceExperience}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Freelance Income *
+              </label>
+              <select
+                value={formData.step2.freelanceIncome}
+                onChange={(e) => onChange('freelanceIncome', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.freelanceIncome ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+              >
+                <option value="">Select income range</option>
+                <option value="0-3">₹0 - ₹3 LPA</option>
+                <option value="3-5">₹3 - ₹5 LPA</option>
+                <option value="5-10">₹5 - ₹10 LPA</option>
+                <option value="10-15">₹10 - ₹15 LPA</option>
+                <option value="15-25">₹15 - ₹25 LPA</option>
+                <option value="25+">₹25+ LPA</option>
+              </select>
+              {errors.freelanceIncome && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.freelanceIncome}
+                </p>
+              )}
+            </div>
+          </div>
+        );
+
+      case 'unemployed':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Reason for Unemployment *
+              </label>
+              <textarea
+                value={formData.step2.unemploymentReason}
+                onChange={(e) => onChange('unemploymentReason', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.unemploymentReason ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+                placeholder="Please explain your current situation"
+                rows={3}
+              />
+              {errors.unemploymentReason && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.unemploymentReason}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Job Search Status *
+              </label>
+              <select
+                value={formData.step2.jobSearchStatus}
+                onChange={(e) => onChange('jobSearchStatus', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.jobSearchStatus ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+              >
+                <option value="">Select status</option>
+                <option value="actively-searching">Actively Searching</option>
+                <option value="casually-looking">Casually Looking</option>
+                <option value="not-looking">Not Currently Looking</option>
+                <option value="taking-break">Taking a Break</option>
+              </select>
+              {errors.jobSearchStatus && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.jobSearchStatus}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Last Job Title
               </label>
               <input
                 type="text"
-                value={data.companyName}
-                onChange={(e) => handleInputChange('companyName', e.target.value)}
+                value={formData.step2.lastJobTitle}
+                onChange={(e) => onChange('lastJobTitle', e.target.value, 'step2')}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter company name"
-                required
+                placeholder="Enter your last job title"
               />
             </div>
+          </div>
+        );
+
+      case 'retired':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Annual Income (in LPA) <span className="text-red-500">*</span>
+                Retirement Age *
               </label>
               <input
                 type="number"
-                value={data.annualIncome}
-                onChange={(e) => handleInputChange('annualIncome', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter income"
-                required
+                value={formData.step2.retirementAge}
+                onChange={(e) => onChange('retirementAge', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.retirementAge ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+                placeholder="Enter retirement age"
+                min="50"
+                max="80"
               />
+              {errors.retirementAge && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.retirementAge}
+                </p>
+              )}
             </div>
-          </>
-        );
-      case 'not-employed':
-        return (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Annual Income (in LPA) <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="number"
-              value={data.annualIncome}
-              onChange={(e) => handleInputChange('annualIncome', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              placeholder="Enter income"
-              required
-            />
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Retirement Income
+              </label>
+              <select
+                value={formData.step2.retirementIncome}
+                onChange={(e) => onChange('retirementIncome', e.target.value, 'step2')}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              >
+                <option value="">Select income range</option>
+                <option value="0-2">₹0 - ₹2 LPA</option>
+                <option value="2-5">₹2 - ₹5 LPA</option>
+                <option value="5-10">₹5 - ₹10 LPA</option>
+                <option value="10-15">₹10 - ₹15 LPA</option>
+                <option value="15+">₹15+ LPA</option>
+              </select>
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Previous Career *
+              </label>
+              <textarea
+                value={formData.step2.previousCareer}
+                onChange={(e) => onChange('previousCareer', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.previousCareer ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+                placeholder="Describe your previous career"
+                rows={3}
+              />
+              {errors.previousCareer && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.previousCareer}
+                </p>
+              )}
+            </div>
           </div>
         );
+
+      case 'student':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Institution *
+              </label>
+              <div className="relative">
+                <GraduationCap className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  value={formData.step2.studentInstitution}
+                  onChange={(e) => onChange('studentInstitution', e.target.value, 'step2')}
+                  className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                    errors.studentInstitution ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                  }`}
+                  placeholder="Enter your institution name"
+                />
+              </div>
+              {errors.studentInstitution && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.studentInstitution}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Field of Study *
+              </label>
+              <input
+                type="text"
+                value={formData.step2.studyField}
+                onChange={(e) => onChange('studyField', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.studyField ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+                placeholder="Enter your field of study"
+              />
+              {errors.studyField && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.studyField}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Expected Graduation *
+              </label>
+              <input
+                type="date"
+                value={formData.step2.expectedGraduation}
+                onChange={(e) => onChange('expectedGraduation', e.target.value, 'step2')}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.expectedGraduation ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+              />
+              {errors.expectedGraduation && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.expectedGraduation}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Part-time Work
+              </label>
+              <input
+                type="text"
+                value={formData.step2.partTimeWork}
+                onChange={(e) => onChange('partTimeWork', e.target.value, 'step2')}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+                placeholder="Any part-time work or internships"
+              />
+            </div>
+          </div>
+        );
+
       default:
         return null;
     }
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div>
-        {/* Education Section */}
-        <div className="space-y-6 mb-8">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Education</h3>
-          
-          {/* Undergraduate */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Undergraduate College <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                value={data.undergraduateCollege}
-                onChange={(e) => handleInputChange('undergraduateCollege', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter Undergraduate College"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Undergraduate Degree <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                value={data.undergraduateDegree}
-                onChange={(e) => handleInputChange('undergraduateDegree', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter degree"
-                required
-              />
-            </div>
-          </div>
-
-          {/* Postgraduate */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Postgraduate College
-              </label>
-              <input
-                type="text"
-                value={data.postgraduateCollege}
-                onChange={(e) => handleInputChange('postgraduateCollege', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter Postgraduate College"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Postgraduate Degree
-              </label>
-              <input
-                type="text"
-                value={data.postgraduateDegree}
-                onChange={(e) => handleInputChange('postgraduateDegree', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter degree"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Professional Status Section */}
-        <div className="space-y-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Professional Information</h3>
-          
-          {/* Professional Status */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-4">
-              Professional Status <span className="text-red-500">*</span>
-            </label>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <button
-                type="button"
-                onClick={() => handleProfessionalStatusChange('employed')}
-                className={`p-4 rounded-lg border-2 text-left transition-all ${
-                  data.professionalStatus === 'employed'
-                    ? 'border-custom-amber bg-amber-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    data.professionalStatus === 'employed' ? 'bg-custom-amber text-white' : 'bg-gray-100 text-gray-600'
-                  }`}>
-                    💼
-                  </div>
-                  <span className={`font-medium ${
-                    data.professionalStatus === 'employed' ? 'text-amber-900' : 'text-gray-900'
-                  }`}>
-                    Employed
-                  </span>
-                  {data.professionalStatus === 'employed' && (
-                    <div className="ml-auto">
-                      <div className="w-5 h-5 bg-custom-amber rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs">✓</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </button>
-              
-              <button
-                type="button"
-                onClick={() => handleProfessionalStatusChange('business')}
-                className={`p-4 rounded-lg border-2 text-left transition-all ${
-                  data.professionalStatus === 'business'
-                    ? 'border-custom-amber bg-amber-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    data.professionalStatus === 'business' ? 'bg-custom-amber text-white' : 'bg-gray-100 text-gray-600'
-                  }`}>
-                    🏢
-                  </div>
-                  <span className={`font-medium ${
-                    data.professionalStatus === 'business' ? 'text-amber-900' : 'text-gray-900'
-                  }`}>
-                    Business
-                  </span>
-                  {data.professionalStatus === 'business' && (
-                    <div className="ml-auto">
-                      <div className="w-5 h-5 bg-custom-amber rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs">✓</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </button>
-              
-              <button
-                type="button"
-                onClick={() => handleProfessionalStatusChange('not-employed')}
-                className={`p-4 rounded-lg border-2 text-left transition-all ${
-                  data.professionalStatus === 'not-employed'
-                    ? 'border-custom-amber bg-amber-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    data.professionalStatus === 'not-employed' ? 'bg-custom-amber text-white' : 'bg-gray-100 text-gray-600'
-                  }`}>
-                    ❌
-                  </div>
-                  <span className={`font-medium ${
-                    data.professionalStatus === 'not-employed' ? 'text-amber-900' : 'text-gray-900'
-                  }`}>
-                    Not Employed
-                  </span>
-                  {data.professionalStatus === 'not-employed' && (
-                    <div className="ml-auto">
-                      <div className="w-5 h-5 bg-custom-amber rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs">✓</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </button>
-            </div>
-          </div>
-
-          {/* Conditional Fields */}
-          {data.professionalStatus && (
-            <div className="space-y-6">
-              {renderConditionalFields()}
-            </div>
-          )}
-        </div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Education & Professional Details</h2>
+        <p className="text-gray-600 mb-6">Tell us about your educational background and professional status</p>
       </div>
-    </div>
-  );
-};
 
-interface Step3Props {
-  data: any;
-  onChange: (data: any) => void;
-}
-
-const Step3: React.FC<Step3Props> = ({ data, onChange }) => {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Partner Preferences</h2>
-        <div className="space-y-6">
-          {/* Age Range Preference */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-4">
-              Age Range Preference <span className="text-red-500">*</span>
-            </label>
-            <div className="mb-12">
-              <DualRangeSlider
-                min={21}
-                max={50}
-                minValue={data.ageMin}
-                maxValue={data.ageMax}
-                onChange={(min, max) => onChange({ ...data, ageMin: min, ageMax: max })}
-              />
-            </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">
-                Selected range: <span className="font-semibold text-gray-900">{data.ageMin} - {data.ageMax} years</span>
-              </p>
-            </div>
-          </div>
-
-          {/* Income and Height Preferences */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Minimum Income Preference (LPA) <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="number"
-                value={data.minIncome}
-                onChange={(e) => onChange({ ...data, minIncome: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter minimum income in LPA"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Minimum Height Preference (cm) <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="number"
-                value={data.minHeight}
-                onChange={(e) => onChange({ ...data, minHeight: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter minimum height in cm"
-                min="120"
-                required
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const Step4: React.FC = () => {
-  return (
-    <div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Step 4</h2>
-      <p className="text-gray-600">Please guide me on what should be included in this step.</p>
-    </div>
-  );
-};
-
-const Step5: React.FC = () => {
-  const [drinkingPreference, setDrinkingPreference] = useState('');
-  const [viewsOnChildren, setViewsOnChildren] = useState('');
-  const [openToPets, setOpenToPets] = useState('');
-  const [willingnessToRelocate, setWillingnessToRelocate] = useState('');
-  const [stayingWithParents, setStayingWithParents] = useState('');
-  const [minimumIncome, setMinimumIncome] = useState('');
-  const [minHeight, setMinHeight] = useState('');
-  const [maxHeight, setMaxHeight] = useState('');
-  const [minAge, setMinAge] = useState(21);
-  const [maxAge, setMaxAge] = useState(50);
-
-  return (
-    <div>
+      {/* Education Section */}
       <div className="space-y-6">
-        {/* Drinking Preference */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-4">
-            Drinking Preference <span className="text-red-500">*</span>
-          </label>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <SelectionCard
-              id="drinks-regularly"
-              title="Drinks Regularly"
-              icon={Coffee}
-              iconColor="text-custom-amber"
-              selected={drinkingPreference === 'drinks-regularly'}
-              onSelect={() => setDrinkingPreference('drinks-regularly')}
-            />
-            <SelectionCard
-              id="teetotaller"
-              title="Teetotaller"
-              icon={Ban}
-              iconColor="text-custom-amber"
-              selected={drinkingPreference === 'teetotaller'}
-              onSelect={() => setDrinkingPreference('teetotaller')}
-            />
-            <SelectionCard
-              id="drinks-occasionally"
-              title="Drinks Occasionally"
-              icon={Wine}
-              iconColor="text-custom-amber"
-              selected={drinkingPreference === 'drinks-occasionally'}
-              onSelect={() => setDrinkingPreference('drinks-occasionally')}
-            />
-            <SelectionCard
-              id="drinks-socially"
-              title="Drinks Socially"
-              icon={Users}
-              iconColor="text-custom-amber"
-              selected={drinkingPreference === 'drinks-socially'}
-              onSelect={() => setDrinkingPreference('drinks-socially')}
-            />
-          </div>
-        </div>
-
-        {/* Views on Having Children */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-2">
-            Views on Having Children <span className="text-red-500">*</span>
-          </label>
-          <p className="text-sm text-gray-600 mb-3">What is your preference about having children?</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SelectionCard
-              id="yes-want-children"
-              title="Yes, I want children"
-              icon={Baby}
-              iconColor="text-custom-amber"
-              selected={viewsOnChildren === 'yes-want-children'}
-              onSelect={() => setViewsOnChildren('yes-want-children')}
-            />
-            <SelectionCard
-              id="no-dont-want-children"
-              title="No, I do not want children"
-              icon={X}
-              iconColor="text-custom-amber"
-              selected={viewsOnChildren === 'no-dont-want-children'}
-              onSelect={() => setViewsOnChildren('no-dont-want-children')}
-            />
-            <SelectionCard
-              id="open-to-discussion-children"
-              title="Open to discussion"
-              icon={MessageCircle}
-              iconColor="text-custom-amber"
-              selected={viewsOnChildren === 'open-to-discussion'}
-              onSelect={() => setViewsOnChildren('open-to-discussion')}
-            />
-          </div>
-        </div>
-
-        {/* Open to Pets */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-4">
-            Open to Pets
-          </label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SelectionCard
-              id="pets-yes"
-              title="Yes"
-              icon={Check}
-              iconColor="text-custom-amber"
-              selected={openToPets === 'yes'}
-              onSelect={() => setOpenToPets('yes')}
-            />
-            <SelectionCard
-              id="pets-no"
-              title="No"
-              icon={X}
-              iconColor="text-custom-amber"
-              selected={openToPets === 'no'}
-              onSelect={() => setOpenToPets('no')}
-            />
-            <SelectionCard
-              id="pets-open-to-discussion"
-              title="Open to discussion"
-              icon={MessageCircle}
-              iconColor="text-custom-amber"
-              selected={openToPets === 'open-to-discussion'}
-              onSelect={() => setOpenToPets('open-to-discussion')}
-            />
-          </div>
-        </div>
-
-        {/* Willingness to Relocate */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-4">
-            Willingness to Relocate
-          </label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SelectionCard
-              id="relocate-yes"
-              title="Yes"
-              icon={Plane}
-              iconColor="text-custom-amber"
-              selected={willingnessToRelocate === 'yes'}
-              onSelect={() => setWillingnessToRelocate('yes')}
-            />
-            <SelectionCard
-              id="relocate-no"
-              title="No"
-              icon={Home}
-              iconColor="text-custom-amber"
-              selected={willingnessToRelocate === 'no'}
-              onSelect={() => setWillingnessToRelocate('no')}
-            />
-            <SelectionCard
-              id="relocate-open-to-discussion"
-              title="Open to discussion"
-              icon={MessageCircle}
-              iconColor="text-custom-amber"
-              selected={willingnessToRelocate === 'open-to-discussion'}
-              onSelect={() => setWillingnessToRelocate('open-to-discussion')}
-            />
-          </div>
-        </div>
-
-        {/* Preference on Staying with Parents */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-4">
-            Preference on Staying with Parents
-          </label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SelectionCard
-              id="parents-yes"
-              title="Yes"
-              icon={UserCheck}
-              iconColor="text-custom-amber"
-              selected={stayingWithParents === 'yes'}
-              onSelect={() => setStayingWithParents('yes')}
-            />
-            <SelectionCard
-              id="parents-no"
-              title="No"
-              icon={Home}
-              iconColor="text-custom-amber"
-              selected={stayingWithParents === 'no'}
-              onSelect={() => setStayingWithParents('no')}
-            />
-            <SelectionCard
-              id="parents-open-to-discussion"
-              title="Open to discussion"
-              icon={MessageCircle}
-              iconColor="text-custom-amber"
-              selected={stayingWithParents === 'open-to-discussion'}
-              onSelect={() => setStayingWithParents('open-to-discussion')}
-            />
-          </div>
-        </div>
-
-        {/* Minimum Income Preference */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-2">
-            Minimum Income Preference (LPA) <span className="text-red-500">*</span>
-          </label>
+        <h3 className="text-lg font-medium text-gray-900">Education</h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <input
-              type="number"
-              value={minimumIncome}
-              onChange={(e) => setMinimumIncome(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              placeholder="Enter minimum income in LPA"
-              min="0"
-            />
-          </div>
-        </div>
-
-        {/* Minimum Height Preference */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-2">
-            Minimum Height Preference (cm) <span className="text-red-500">*</span>
-          </label>
-          <div>
-            <input
-              type="number"
-              value={minHeight}
-              onChange={(e) => setMinHeight(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              placeholder="Enter minimum height in cm"
-              min="120"
-            />
-          </div>
-        </div>
-
-        {/* Age Range Preference */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-2">
-            Age Range Preference <span className="text-red-500">*</span>
-          </label>
-          <p className="text-sm text-gray-600 mb-3">Select minimum and maximum preferred age.</p>
-          <div className="w-full">
-            <DualRangeSlider
-              min={21}
-              max={50}
-              minValue={minAge}
-              maxValue={maxAge}
-              onChange={(min, max) => {
-                setMinAge(min);
-                setMaxAge(max);
-              }}
-              label="years"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const Step6: React.FC = () => {
-  return (
-    <div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Step 6</h2>
-      <p className="text-gray-600">Please guide me on what should be included in this step.</p>
-    </div>
-  );
-};
-
-const Step7: React.FC = () => {
-  return (
-    <div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Step 7</h2>
-      <p className="text-gray-600">Please guide me on what should be included in this step.</p>
-    </div>
-  );
-};
-
-// Video Verification Page
-interface VideoVerificationProps {
-  onComplete: () => void;
-  onBack: () => void;
-}
-
-const VideoVerification: React.FC<VideoVerificationProps> = ({ onComplete, onBack }) => {
-  const [isRecording, setIsRecording] = useState(false);
-  const [hasRecorded, setHasRecorded] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-
-  const handleStartRecording = () => {
-    setIsRecording(true);
-    // Simulate recording for 3 seconds
-    setTimeout(() => {
-      setIsRecording(false);
-      setHasRecorded(true);
-    }, 3000);
-  };
-
-  const handleUpload = () => {
-    setIsUploading(true);
-    // Simulate upload process
-    setTimeout(() => {
-      setIsUploading(false);
-      onComplete();
-    }, 2000);
-  };
-
-  return (
-    <div className="flex-1 bg-gray-50 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 text-left">
-            Video Verification
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600 text-left">
-            This step ensures the authenticity and security of matchmaking profiles by verifying your identity through a short video recording.
-          </p>
-        </div>
-
-        {/* Video Verification Content */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 mb-8">
-          {/* Video Recording Area */}
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center mb-8">
-            {!hasRecorded ? (
-              <div className="space-y-6">
-                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
-                  <Camera className="w-10 h-10 text-gray-400" />
-                </div>
-                {!isRecording ? (
-                  <>
-                    <p className="text-gray-600 text-lg">Click the button below to start recording</p>
-                    <button
-                      onClick={handleStartRecording}
-                      className="px-8 py-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center space-x-3 mx-auto text-lg"
-                    >
-                      <Video className="w-6 h-6" />
-                      <span>Start Recording</span>
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                      <span className="text-red-600 font-medium text-lg">Recording in progress...</span>
-                    </div>
-                    <p className="text-gray-600">Please speak clearly and state your name and today's date</p>
-                  </>
-                )}
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                  <Check className="w-8 h-8 text-green-600" />
-                </div>
-                <p className="text-green-600 font-medium">Video recorded successfully!</p>
-                <p className="text-gray-600">Your verification video is ready to upload</p>
-                <div className="flex justify-center space-x-4">
-                  <button
-                    onClick={() => {
-                      setHasRecorded(false);
-                      setIsRecording(false);
-                    }}
-                    className="px-4 py-2 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    Re-record
-                  </button>
-                  <button
-                    onClick={handleUpload}
-                    disabled={isUploading}
-                    className="px-6 py-2 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium disabled:opacity-50"
-                  >
-                    {isUploading ? 'Uploading...' : 'Upload Video'}
-                  </button>
-                </div>
-              </div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Undergraduate College *
+            </label>
+            <div className="relative">
+              <GraduationCap className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                value={formData.step2.undergraduateCollege}
+                onChange={(e) => onChange('undergraduateCollege', e.target.value, 'step2')}
+                className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                  errors.undergraduateCollege ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+                }`}
+                placeholder="Enter your undergraduate college"
+              />
+            </div>
+            {errors.undergraduateCollege && (
+              <p className="text-red-500 text-sm mt-1 flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {errors.undergraduateCollege}
+              </p>
             )}
           </div>
-        </div>
 
-        {/* Recording Guidelines */}
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-6">
-          <h3 className="font-semibold text-amber-900 mb-4 flex items-center">
-            <AlertCircle className="w-5 h-5 mr-2" />
-            Recording Guidelines
-          </h3>
-          <ul className="space-y-3 text-amber-800">
-            <li className="flex items-start">
-              <span className="mr-3 mt-1">•</span>
-              <span>Ensure good lighting and clear visibility of your face</span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-3 mt-1">•</span>
-              <span>Speak clearly and state your full name and today's date</span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-3 mt-1">•</span>
-              <span>Keep the video between 10-15 seconds</span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-3 mt-1">•</span>
-              <span>Make sure you're the only person in the frame</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Privacy Notice */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-          <div className="flex items-start space-x-3">
-            <Shield className="w-6 h-6 text-blue-600 mt-1 flex-shrink-0" />
-            <div>
-              <h4 className="font-medium text-blue-900 mb-2 text-lg">Privacy & Security</h4>
-              <p className="text-blue-800">
-                Your verification video is encrypted and used solely for identity verification purposes. It will be reviewed by our team and securely deleted after verification is complete.
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Undergraduate Degree *
+            </label>
+            <input
+              type="text"
+              value={formData.step2.undergraduateDegree}
+              onChange={(e) => onChange('undergraduateDegree', e.target.value, 'step2')}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+                errors.undergraduateDegree ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+              }`}
+              placeholder="e.g., B.Tech, B.Com, BA, etc."
+            />
+            {errors.undergraduateDegree && (
+              <p className="text-red-500 text-sm mt-1 flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {errors.undergraduateDegree}
               </p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Postgraduate College
+            </label>
+            <div className="relative">
+              <GraduationCap className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                value={formData.step2.postgraduateCollege}
+                onChange={(e) => onChange('postgraduateCollege', e.target.value, 'step2')}
+                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+                placeholder="Enter your postgraduate college (if any)"
+              />
             </div>
           </div>
-        </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex items-center justify-between">
-          <button
-            onClick={onBack}
-            className="flex items-center space-x-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Previous</span>
-          </button>
-
-          <button
-            onClick={onComplete}
-            className="flex items-center space-x-2 px-6 py-3 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium"
-          >
-            <span>Next</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Postgraduate Degree
+            </label>
+            <input
+              type="text"
+              value={formData.step2.postgraduateDegree}
+              onChange={(e) => onChange('postgraduateDegree', e.target.value, 'step2')}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              placeholder="e.g., MBA, M.Tech, MA, etc."
+            />
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
 
-// Magic Link Settings Page
-interface MagicLinkSettingsProps {
-  onComplete: () => void;
-}
-
-const MagicLinkSettings: React.FC<MagicLinkSettingsProps> = ({ onComplete }) => {
-  const [selectedPrivacy, setSelectedPrivacy] = useState<'open' | 'partial' | 'private'>('open');
-  const [customSlug, setCustomSlug] = useState('your-name');
-
-  return (
-    <div className="flex-1 bg-gray-50 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            Magic Link's Privacy
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600">
-            Choose how you'd like your Magic Link to be shared
-          </p>
-        </div>
-
-        <div className="space-y-8">
-          {/* Privacy Selection */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">Select your Magic Link's Privacy</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Keep My Link Open */}
-              <PrivacyCard
-                id="open"
-                title="Keep My Link Open"
-                badge="Recommended"
-                description="Share your Magic Link just like you would a biodata - but smarter."
-                features={[
-                  "Parents and family can view it easily.",
-                  "Downloadable PDF version included.",
-                  "We recommend this option if you prefer to replace your traditional biodata."
-                ]}
-                icon="👁️"
-                selected={selectedPrivacy === 'open'}
-                onSelect={() => setSelectedPrivacy('open')}
-                recommended={true}
-              />
-              
-              {/* Keep My Link Partially Private */}
-              <PrivacyCard
-                id="partial"
-                title="Keep My Link Partially Private"
-                description="For those who want balance."
-                features={[
-                  "Anyone with your link can see your photo and \"About Me,\" but not your name.",
-                  "Only Verified TDC customers can log in to see your profile. You'll be notified when this happens.",
-                  "Matches happen only with mutual acceptance, and we'll help fix the date."
-                ]}
-                icon="🛡️"
-                selected={selectedPrivacy === 'partial'}
-                onSelect={() => setSelectedPrivacy('partial')}
-              />
-              
-              {/* Keep My Link Completely Private */}
-              <PrivacyCard
-                id="private"
-                title="Keep My Link Completely Private"
-                description="For maximum discretion."
-                features={[
-                  "Your profile won't be accessible through the link. No Personal Slug. No Analytics.",
-                  "It will only be visible to TDC matchmakers.",
-                  "If we find a potential match, we'll call you directly to take things forward."
-                ]}
-                icon="🔒"
-                selected={selectedPrivacy === 'private'}
-                onSelect={() => setSelectedPrivacy('private')}
-              />
-            </div>
-          </div>
-          
-          {/* Slug Selection - Only show if not completely private */}
-          {selectedPrivacy !== 'private' && (
-            <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Slug Selection</h2>
-              <p className="text-gray-600 mb-6">
-                Choose your personal profile link (e.g., thedatecrew.com/yourname).
-              </p>
-              
-              <div className="flex items-center space-x-2 mb-4">
-                <span className="text-gray-500 text-sm sm:text-base">findlove.thedatecrew.com/profile/</span>
-                <input
-                  type="text"
-                  value={customSlug}
-                  onChange={(e) => setCustomSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
-                  className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                  placeholder="your-name"
-                />
-              </div>
-              
-              <p className="text-xs sm:text-sm text-gray-500">
-                Your profile will be accessible at: findlove.thedatecrew.com/profile/{customSlug}
-              </p>
-            </div>
+      {/* Professional Status Section */}
+      <div className="space-y-6">
+        <h3 className="text-lg font-medium text-gray-900">Professional Status</h3>
+        
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Current Professional Status *
+          </label>
+          <select
+            value={formData.step2.professionalStatus}
+            onChange={(e) => onChange('professionalStatus', e.target.value, 'step2')}
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent ${
+              errors.professionalStatus ? 'border-red-300 focus:ring-red-500' : 'border-gray-200 focus:ring-custom-amber'
+            }`}
+          >
+            <option value="">Select your professional status</option>
+            <option value="employed">Employed</option>
+            <option value="business-owner">Business Owner</option>
+            <option value="freelancer">Freelancer</option>
+            <option value="unemployed">Unemployed</option>
+            <option value="retired">Retired</option>
+            <option value="student">Student</option>
+          </select>
+          {errors.professionalStatus && (
+            <p className="text-red-500 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {errors.professionalStatus}
+            </p>
           )}
         </div>
 
-        <div className="flex items-center justify-between mt-8">
-          <button
-            onClick={() => {/* Go back to form step 7 */}}
-            className="flex items-center space-x-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Previous</span>
-          </button>
-
-          <button
-            onClick={onComplete}
-            className="flex items-center space-x-2 px-6 py-3 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium"
-          >
-            <span>Save Settings</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
+        {/* Conditional Professional Fields */}
+        {professionalStatus && (
+          <div className="mt-6">
+            {renderProfessionalFields()}
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-// Privacy Card Component
-interface PrivacyCardProps {
-  id: string;
-  title: string;
-  badge?: string;
-  description: string;
-  features: string[];
-  icon: string;
-  selected: boolean;
-  onSelect: () => void;
-  recommended?: boolean;
-}
-
-const PrivacyCard: React.FC<PrivacyCardProps> = ({
-  title,
-  badge,
-  description,
-  features,
-  icon,
-  selected,
-  onSelect,
-  recommended
-}) => {
+// Placeholder components for other steps
+const Step3: React.FC<{
+  formData: any;
+  onChange: (field: string, value: any, step?: string) => void;
+  errors: Record<string, string>;
+}> = ({ formData, onChange, errors }) => {
   return (
-    <div
-      onClick={onSelect}
-      className={`relative p-6 rounded-xl border-2 cursor-pointer transition-all ${
-        selected
-          ? 'border-custom-amber bg-amber-50'
-          : 'border-gray-200 bg-white hover:border-gray-300'
-      } ${recommended ? 'ring-2 ring-custom-amber ring-opacity-20' : ''}`}
-    >
-      {badge && (
-        <div className="absolute -top-3 left-4">
-          <span className="bg-custom-amber text-white px-3 py-1 rounded-full text-xs font-medium">
-            {badge}
-          </span>
-        </div>
-      )}
-      
-      <div className="flex items-center space-x-3 mb-4">
-        <span className="text-2xl">{icon}</span>
-        <h3 className={`font-semibold ${selected ? 'text-amber-900' : 'text-gray-900'}`}>
-          {title}
-        </h3>
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Personal Details</h2>
+        <p className="text-gray-600 mb-6">Share more about yourself</p>
       </div>
-      
-      <p className={`text-sm mb-4 ${selected ? 'text-amber-700' : 'text-gray-600'}`}>
-        {description}
-      </p>
-      
-      <ul className="space-y-2">
-        {features.map((feature, index) => (
-          <li key={index} className={`text-sm flex items-start ${selected ? 'text-amber-700' : 'text-gray-600'}`}>
-            <span className="mr-2 mt-1">•</span>
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-// Verification Pending Page
-interface VerificationPendingProps {
-  onComplete: () => void;
-  setCurrentPage: (page: 'form' | 'settings' | 'verification') => void;
-}
-
-const VerificationPending: React.FC<VerificationPendingProps> = (props) => {
-  return (
-    <div className="flex-1 bg-gray-50 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-8 text-left">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            Profile Submitted Successfully! 🎉
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600">
-            Thank you for sharing your details—our matchmakers will review your profile within 24–48 hours. Please keep an eye on your inbox for updates!
-          </p>
-        </div>
-
-        <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 mb-8">
-          <div className="space-y-6">
-            <div className="flex items-start space-x-4">
-              <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div className="flex-1 flex items-center">
-                <p className="text-gray-700 font-medium">
-                  Your profile has been shared with our matchmakers.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="flex-1 flex items-center">
-                <p className="text-gray-700">
-                  It may take 24–48 hours for us to review your details. If we need any clarification, we'll reach out to you by email—so please keep an eye on your inbox.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-              <div className="flex-1 flex items-center">
-                <p className="text-gray-700">
-                  You can now access your portal. All features will unlock once your profile is verified.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Help Section */}
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-8">
-          <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 bg-custom-amber rounded-full flex items-center justify-center flex-shrink-0">
-              <Mail className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-amber-900 mb-2">Need Help?</h3>
-              <p className="text-amber-800">
-                If you have any questions, just drop us a note at{' '}
-                <a 
-                  href="mailto:hello@thedatecrew.com" 
-                  className="text-custom-amber hover:underline font-medium"
-                >
-                  hello@thedatecrew.com
-                </a>
-                {' '}and we'll get back to you.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => props.setCurrentPage('settings')}
-            className="flex items-center space-x-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Previous</span>
-          </button>
-
-          <button
-            onClick={props.onComplete}
-            className="flex items-center space-x-2 px-6 py-3 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium"
-          >
-            <span>Next</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
+      <div className="text-center py-12">
+        <p className="text-gray-500">Step 3 content will be implemented here</p>
       </div>
     </div>
   );
 };
 
-// Verification Complete Screen
-interface VerificationCompleteScreenProps {
-  onComplete: () => void;
-}
-
-const VerificationCompleteScreen: React.FC<VerificationCompleteScreenProps> = ({ onComplete }) => {
-  const [showConfetti, setShowConfetti] = useState(false);
-
-  const handleProceed = () => {
-    setShowConfetti(true);
-    // Show confetti for 2 seconds before redirecting
-    setTimeout(() => {
-      onComplete();
-    }, 2000);
-  };
-
+const Step4: React.FC<{
+  formData: any;
+  onChange: (field: string, value: any, step?: string) => void;
+  errors: Record<string, string>;
+}> = ({ formData, onChange, errors }) => {
   return (
-    <div className="flex-1 bg-gray-50 p-4 sm:p-6 lg:p-8 relative">
-      {/* Confetti Effect */}
-      {showConfetti && (
-        <div className="fixed inset-0 pointer-events-none z-50">
-          {Array.from({ length: 50 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-bounce"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${2 + Math.random() * 2}s`,
-              }}
-            >
-              <div
-                className={`w-3 h-3 rounded-full ${
-                  ['bg-custom-amber', 'bg-custom-green', 'bg-blue-500', 'bg-purple-500', 'bg-pink-500'][
-                    Math.floor(Math.random() * 5)
-                  ]
-                }`}
-              />
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Verification Complete! 
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-600 mb-8">
-            You can now start sharing your magic link and access all features.
-          </p>
-        </div>
-
-        <div className="bg-white rounded-xl border border-gray-200 p-8 sm:p-12 mb-8 text-center">
-          {/* Success Icon */}
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8">
-            <Check className="w-10 h-10 text-green-600" />
-          </div>
-
-          {/* Body Content */}
-          <div className="max-w-2xl mx-auto mb-12">
-            <p className="text-gray-700 text-lg leading-relaxed">
-              Your identity has been successfully verified. Share your magic link with others and unlock the full portal experience. All features are now enabled for your account, making it easy to connect and participate securely.
-            </p>
-          </div>
-
-          {/* CTA Button */}
-          <button
-            onClick={handleProceed}
-            disabled={showConfetti}
-            className={`px-8 py-4 bg-custom-green text-white rounded-lg font-medium text-lg transition-all duration-200 ${
-              showConfetti 
-                ? 'opacity-75 cursor-not-allowed transform scale-95' 
-                : 'hover:bg-opacity-90 hover:shadow-lg transform hover:scale-105'
-            }`}
-          >
-            {showConfetti ? 'Redirecting...' : 'Proceed to Magic Link'}
-          </button>
-        </div>
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Lifestyle & Interests</h2>
+        <p className="text-gray-600 mb-6">Tell us about your hobbies and lifestyle</p>
+      </div>
+      <div className="text-center py-12">
+        <p className="text-gray-500">Step 4 content will be implemented here</p>
       </div>
     </div>
   );
 };
 
-// Selection Card Component for Step 5
-interface SelectionCardProps {
-  id: string;
-  title: string;
-  icon: React.ComponentType<any>;
-  iconColor?: string;
-  selected: boolean;
-  onSelect: () => void;
-}
-
-const SelectionCard: React.FC<SelectionCardProps> = ({ title, icon: Icon, iconColor = "text-gray-600", selected, onSelect }) => {
+const Step5: React.FC<{
+  formData: any;
+  onChange: (field: string, value: any, step?: string) => void;
+  errors: Record<string, string>;
+}> = ({ formData, onChange, errors }) => {
   return (
-    <button
-      onClick={onSelect}
-      className={`p-4 rounded-xl border-2 transition-all duration-200 text-left w-full ${
-        selected
-          ? 'border-custom-amber bg-amber-50'
-          : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
-      }`}
-    >
-      <div className="flex items-center space-x-3">
-        <Icon className={`w-6 h-6 ${iconColor}`} />
-        <span className={`font-medium ${selected ? 'text-amber-900' : 'text-gray-900'}`}>
-          {title}
-        </span>
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Partner Preferences</h2>
+        <p className="text-gray-600 mb-6">What are you looking for in a partner?</p>
       </div>
-    </button>
+      <div className="text-center py-12">
+        <p className="text-gray-500">Step 5 content will be implemented here</p>
+      </div>
+    </div>
   );
 };
 
-// Dual Range Slider Component
-interface DualRangeSliderProps {
-  min: number;
-  max: number;
-  minValue: number;
-  maxValue: number;
-  onChange: (min: number, max: number) => void;
-  label?: string;
-}
-
-const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
-  min,
-  max,
-  minValue,
-  maxValue,
-  onChange,
-  label = ''
-}) => {
-  const [isDragging, setIsDragging] = useState<'min' | 'max' | null>(null);
-  const sliderRef = React.useRef<HTMLDivElement>(null);
-
-  const getPercentage = (value: number) => ((value - min) / (max - min)) * 100;
-
-  const handleMouseDown = (type: 'min' | 'max') => (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsDragging(type);
-  };
-
-  const handleMouseMove = React.useCallback((e: MouseEvent) => {
-    if (!isDragging || !sliderRef.current) return;
-
-    const rect = sliderRef.current.getBoundingClientRect();
-    const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-    const value = Math.round(min + (percentage / 100) * (max - min));
-
-    if (isDragging === 'min') {
-      const newMin = Math.min(value, maxValue - 1);
-      onChange(newMin, maxValue);
-    } else {
-      const newMax = Math.max(value, minValue + 1);
-      onChange(minValue, newMax);
-    }
-  }, [isDragging, min, max, minValue, maxValue, onChange]);
-
-  const handleMouseUp = React.useCallback(() => {
-    setIsDragging(null);
-  }, []);
-
-  React.useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      return () => {
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-      };
-    }
-  }, [isDragging, handleMouseMove, handleMouseUp]);
-
-  const minPercentage = getPercentage(minValue);
-  const maxPercentage = getPercentage(maxValue);
-
+const Step6: React.FC<{
+  formData: any;
+  onChange: (field: string, value: any, step?: string) => void;
+  errors: Record<string, string>;
+}> = ({ formData, onChange, errors }) => {
   return (
-    <div className="w-full">
-      {/* Value Display */}
-      <div className="relative mb-12">
-        <div 
-          className="absolute transform -translate-x-1/2 -translate-y-full"
-          style={{ left: `${minPercentage}%` }}
-        >
-          <div className="bg-custom-green text-white px-3 py-2 rounded-lg font-semibold text-sm shadow-lg mb-2">
-            {minValue} {label}
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-custom-green"></div>
-          </div>
-        </div>
-        <div 
-          className="absolute transform -translate-x-1/2 -translate-y-full"
-          style={{ left: `${maxPercentage}%` }}
-        >
-          <div className="bg-custom-green text-white px-3 py-2 rounded-lg font-semibold text-sm shadow-lg mb-2">
-            {maxValue} {label}
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-custom-green"></div>
-          </div>
-        </div>
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">About Me & Photos</h2>
+        <p className="text-gray-600 mb-6">Complete your profile with photos and description</p>
       </div>
-
-      {/* Slider Track */}
-      <div 
-        ref={sliderRef}
-        className="relative h-2 bg-gray-200 rounded-full cursor-pointer"
-      >
-        {/* Active Range */}
-        <div
-          className="absolute h-full bg-custom-amber rounded-full"
-          style={{
-            left: `${minPercentage}%`,
-            width: `${maxPercentage - minPercentage}%`
-          }}
-        />
-        
-        {/* Min Handle */}
-        <div
-          className={`absolute w-6 h-6 bg-white border-3 border-custom-amber rounded-full shadow-lg cursor-pointer transform -translate-x-1/2 -translate-y-1/2 top-1/2 transition-transform hover:scale-110 ${
-            isDragging === 'min' ? 'scale-125' : ''
-          }`}
-          style={{ left: `${minPercentage}%` }}
-          onMouseDown={handleMouseDown('min')}
-        />
-        
-        {/* Max Handle */}
-        <div
-          className={`absolute w-6 h-6 bg-white border-3 border-custom-amber rounded-full shadow-lg cursor-pointer transform -translate-x-1/2 -translate-y-1/2 top-1/2 transition-transform hover:scale-110 ${
-            isDragging === 'max' ? 'scale-125' : ''
-          }`}
-          style={{ left: `${maxPercentage}%` }}
-          onMouseDown={handleMouseDown('max')}
-        />
-      </div>
-
-      {/* Range Labels */}
-      <div className="flex justify-between text-xs text-gray-500 mt-2">
-        <span>{min}</span>
-        <span>{max}</span>
-      </div>
-
-      {/* Summary */}
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-4">
-        <p className="text-sm text-amber-800">
-          <span className="font-medium">Selected Age Range:</span> {minValue} - {maxValue} {label}
-        </p>
+      <div className="text-center py-12">
+        <p className="text-gray-500">Step 6 content will be implemented here</p>
       </div>
     </div>
   );
