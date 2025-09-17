@@ -196,6 +196,35 @@ const Step1: React.FC = () => {
     hometownCountry: '',
     currentCity: '',
     hometown: ''
+    step2: {
+      undergraduateCollege: '',
+      undergraduateDegree: '',
+      postgraduateCollege: '',
+      postgraduateDegree: '',
+      professionalStatus: '',
+      companyName: '',
+      jobTitle: '',
+      workExperience: '',
+      businessName: '',
+      businessType: '',
+      businessExperience: '',
+      unemploymentReason: '',
+      lastJobTitle: '',
+      lastCompanyName: '',
+      unemploymentDuration: '',
+      retirementAge: '',
+      lastJobTitle2: '',
+      lastCompanyName2: '',
+      pensionDetails: '',
+      currentEducation: '',
+      educationInstitution: '',
+      expectedGraduation: '',
+      previousEducation: '',
+      homemakerDuration: '',
+      previousCareer: '',
+      familySupport: '',
+      dailyActivities: ''
+    }
   });
 
   const handleInputChange = (field: string, value: string) => {
