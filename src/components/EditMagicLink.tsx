@@ -25,36 +25,6 @@ const EditMagicLink: React.FC<EditMagicLinkProps> = ({ onComplete }) => {
     }
   };
 
-  const [formData, setFormData] = useState({
-    step1: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      dateOfBirth: '',
-      height: '',
-      gender: '',
-      linkedinUrl: '',
-      instagramUrl: '',
-      twitterUrl: '',
-      currentCountry: '',
-      hometownCountry: '',
-      currentCity: '',
-      hometown: ''
-    },
-    step2: {
-      undergraduateCollege: '',
-      undergraduateDegree: '',
-      postgraduateCollege: '',
-      postgraduateDegree: '',
-      professionalStatus: '',
-      currentCompany: '',
-      designation: '',
-      companyName: '',
-      annualIncome: ''
-    }
-  });
-
   const handleSettingsComplete = () => {
     // After Magic Link Settings, go to Verification Pending
     setCurrentPage('verification');
@@ -506,13 +476,13 @@ const Step1: React.FC = () => {
 };
 
 interface Step2Props {
-  data?: any;
-  onChange?: (data: any) => void;
-  onNext?: () => void;
-  onPrev?: () => void;
+  data: any;
+  onChange: (data: any) => void;
+  onNext: () => void;
+  onPrev: () => void;
 }
 
-const Step2: React.FC<Step2Props> = ({ data = {}, onChange = () => {}, onNext = () => {}, onPrev = () => {} }) => {
+const Step2: React.FC<Step2Props> = ({ data, onChange, onNext, onPrev }) => {
   const handleInputChange = (field: string, value: string) => {
     onChange({ ...data, [field]: value });
   };
@@ -810,11 +780,11 @@ const Step2: React.FC<Step2Props> = ({ data = {}, onChange = () => {}, onNext = 
 };
 
 interface Step3Props {
-  data?: any;
-  onChange?: (data: any) => void;
+  data: any;
+  onChange: (data: any) => void;
 }
 
-const Step3: React.FC<Step3Props> = ({ data = {}, onChange = () => {} }) => {
+const Step3: React.FC<Step3Props> = ({ data, onChange }) => {
   return (
     <div className="space-y-8">
       <div>
@@ -829,14 +799,14 @@ const Step3: React.FC<Step3Props> = ({ data = {}, onChange = () => {} }) => {
               <DualRangeSlider
                 min={21}
                 max={50}
-                minValue={data.ageMin || 21}
-                maxValue={data.ageMax || 50}
+                minValue={data.ageMin}
+                maxValue={data.ageMax}
                 onChange={(min, max) => onChange({ ...data, ageMin: min, ageMax: max })}
               />
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="text-sm text-gray-600">
-                Selected range: <span className="font-semibold text-gray-900">{data.ageMin || 21} - {data.ageMax || 50} years</span>
+                Selected range: <span className="font-semibold text-gray-900">{data.ageMin} - {data.ageMax} years</span>
               </p>
             </div>
           </div>
@@ -849,7 +819,7 @@ const Step3: React.FC<Step3Props> = ({ data = {}, onChange = () => {} }) => {
               </label>
               <input
                 type="number"
-                value={data.minIncome || ''}
+                value={data.minIncome}
                 onChange={(e) => onChange({ ...data, minIncome: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
                 placeholder="Enter minimum income in LPA"
@@ -862,7 +832,7 @@ const Step3: React.FC<Step3Props> = ({ data = {}, onChange = () => {} }) => {
               </label>
               <input
                 type="number"
-                value={data.minHeight || ''}
+                value={data.minHeight}
                 onChange={(e) => onChange({ ...data, minHeight: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
                 placeholder="Enter minimum height in cm"
@@ -1506,7 +1476,7 @@ const PrivacyCard: React.FC<PrivacyCardProps> = ({
 // Verification Pending Page
 interface VerificationPendingProps {
   onComplete: () => void;
-  setCurrentPage: (page: 'form' | 'settings' | 'verification' | 'verification-complete') => void;
+  setCurrentPage: (page: 'form' | 'settings' | 'verification') => void;
 }
 
 const VerificationPending: React.FC<VerificationPendingProps> = (props) => {
