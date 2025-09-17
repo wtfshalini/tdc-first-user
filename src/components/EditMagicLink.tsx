@@ -181,10 +181,296 @@ const EditMagicLink: React.FC<EditMagicLinkProps> = ({ onComplete }) => {
 
 // Placeholder step components - you can guide me on what each should contain
 const Step1: React.FC = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    dateOfBirth: '',
+    height: '',
+    gender: '',
+    linkedinUrl: '',
+    instagramUrl: '',
+    twitterUrl: '',
+    currentCountry: '',
+    hometownCountry: '',
+    currentCity: '',
+    hometown: ''
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const countries = [
+    'United States', 'Canada', 'United Kingdom', 'Australia', 'Germany', 
+    'France', 'Italy', 'Spain', 'Netherlands', 'Sweden', 'Norway', 'Denmark',
+    'India', 'China', 'Japan', 'South Korea', 'Singapore', 'Malaysia',
+    'Brazil', 'Argentina', 'Mexico', 'South Africa', 'Egypt', 'Nigeria'
+  ];
+
+  const cities = [
+    'New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia',
+    'Toronto', 'Vancouver', 'Montreal', 'London', 'Manchester', 'Birmingham',
+    'Sydney', 'Melbourne', 'Brisbane', 'Berlin', 'Munich', 'Hamburg',
+    'Paris', 'Lyon', 'Marseille', 'Rome', 'Milan', 'Naples',
+    'Madrid', 'Barcelona', 'Valencia', 'Amsterdam', 'Rotterdam', 'The Hague',
+    'Stockholm', 'Gothenburg', 'Oslo', 'Copenhagen', 'Mumbai', 'Delhi',
+    'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Tokyo', 'Osaka',
+    'Seoul', 'Singapore', 'Kuala Lumpur', 'São Paulo', 'Rio de Janeiro',
+    'Buenos Aires', 'Mexico City', 'Cape Town', 'Johannesburg', 'Cairo'
+  ];
+
   return (
-    <div>
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Step 1</h2>
-      <p className="text-gray-600">Please guide me on what should be included in this step.</p>
+    <div className="space-y-6">
+      {/* Name Fields */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            First Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            value={formData.firstName}
+            onChange={(e) => handleInputChange('firstName', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+            placeholder="Enter your first name"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Last Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            value={formData.lastName}
+            onChange={(e) => handleInputChange('lastName', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+            placeholder="Enter your last name"
+            required
+          />
+        </div>
+      </div>
+
+      {/* Email and Phone */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Email <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            value={formData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+            placeholder="Enter your email address"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Phone Number <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="tel"
+            value={formData.phoneNumber}
+            onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+            placeholder="Enter your phone number"
+            required
+          />
+        </div>
+      </div>
+
+      {/* Date of Birth and Height */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Date of Birth <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="date"
+            value={formData.dateOfBirth}
+            onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Height (in cm) <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="number"
+            value={formData.height}
+            onChange={(e) => handleInputChange('height', e.target.value)}
+            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+            placeholder="Enter your height"
+            min="120"
+            max="250"
+            required
+          />
+        </div>
+      </div>
+
+      {/* Gender */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-4">
+          Gender <span className="text-red-500">*</span>
+        </label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label className="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+            <input
+              type="radio"
+              name="gender"
+              value="male"
+              checked={formData.gender === 'male'}
+              onChange={(e) => handleInputChange('gender', e.target.value)}
+              className="w-4 h-4 text-custom-amber focus:ring-custom-amber border-gray-300"
+            />
+            <span className="ml-3 text-gray-900 font-medium">Male</span>
+          </label>
+          <label className="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+            <input
+              type="radio"
+              name="gender"
+              value="female"
+              checked={formData.gender === 'female'}
+              onChange={(e) => handleInputChange('gender', e.target.value)}
+              className="w-4 h-4 text-custom-amber focus:ring-custom-amber border-gray-300"
+            />
+            <span className="ml-3 text-gray-900 font-medium">Female</span>
+          </label>
+        </div>
+      </div>
+
+      {/* Social Media Links */}
+      <div className="space-y-6">
+        <h3 className="text-lg font-medium text-gray-900">Social Media Profiles</h3>
+        
+        {/* LinkedIn and Instagram */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Your LinkedIn ID Link
+            </label>
+            <input
+              type="url"
+              value={formData.linkedinUrl}
+              onChange={(e) => handleInputChange('linkedinUrl', e.target.value)}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              placeholder="Enter your LinkedIn profile URL"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Your Instagram Id Link
+            </label>
+            <input
+              type="url"
+              value={formData.instagramUrl}
+              onChange={(e) => handleInputChange('instagramUrl', e.target.value)}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              placeholder="Enter your Instagram profile URL"
+            />
+          </div>
+        </div>
+
+        {/* Twitter */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Your X (Twitter) Id Link
+            </label>
+            <input
+              type="url"
+              value={formData.twitterUrl}
+              onChange={(e) => handleInputChange('twitterUrl', e.target.value)}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              placeholder="Enter your Twitter profile URL"
+            />
+          </div>
+          <div></div>
+        </div>
+      </div>
+
+      {/* Location Information */}
+      <div className="space-y-6">
+        <h3 className="text-lg font-medium text-gray-900">Location Information</h3>
+        
+        {/* Current Country and Hometown Country */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Current Country <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={formData.currentCountry}
+              onChange={(e) => handleInputChange('currentCountry', e.target.value)}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              required
+            >
+              <option value="">Pick your current country</option>
+              {countries.map(country => (
+                <option key={country} value={country}>{country}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Hometown Country <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={formData.hometownCountry}
+              onChange={(e) => handleInputChange('hometownCountry', e.target.value)}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              required
+            >
+              <option value="">Pick your hometown country</option>
+              {countries.map(country => (
+                <option key={country} value={country}>{country}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Current City and Hometown */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Current City <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={formData.currentCity}
+              onChange={(e) => handleInputChange('currentCity', e.target.value)}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              required
+            >
+              <option value="">Pick your current city</option>
+              {cities.map(city => (
+                <option key={city} value={city}>{city}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Hometown <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={formData.hometown}
+              onChange={(e) => handleInputChange('hometown', e.target.value)}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              required
+            >
+              <option value="">Pick your hometown</option>
+              {cities.map(city => (
+                <option key={city} value={city}>{city}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
