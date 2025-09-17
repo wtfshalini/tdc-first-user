@@ -314,7 +314,7 @@ const Step1: React.FC = () => {
         </div>
       </div>
 
-      {/* Gender Selection */}
+      {/* Gender */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-4">
           Gender <span className="text-red-500">*</span>
@@ -475,374 +475,20 @@ const Step1: React.FC = () => {
   );
 };
 
-interface Step2Props {
-  data: any;
-  onChange: (data: any) => void;
-  onNext: () => void;
-  onPrev: () => void;
-}
-
-const Step2: React.FC<Step2Props> = ({ data, onChange, onNext, onPrev }) => {
-  const handleInputChange = (field: string, value: string) => {
-    onChange({ ...data, [field]: value });
-  };
-
-  const handleProfessionalStatusChange = (status: string) => {
-    // Clear conditional fields when status changes
-    const updatedData = {
-      ...data,
-      professionalStatus: status,
-      currentCompany: '',
-      designation: '',
-      companyName: '',
-    };
-    onChange(updatedData);
-  };
-
-  const renderConditionalFields = () => {
-    switch (data.professionalStatus) {
-      case 'employed':
-        return (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Current Company <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={data.currentCompany}
-                  onChange={(e) => handleInputChange('currentCompany', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                  placeholder="Enter company name"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Designation <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={data.designation}
-                  onChange={(e) => handleInputChange('designation', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                  placeholder="Enter designation"
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Annual Income (in LPA) <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="number"
-                value={data.annualIncome}
-                onChange={(e) => handleInputChange('annualIncome', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter income"
-                required
-              />
-            </div>
-          </>
-        );
-      case 'business':
-        return (
-          <>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Company Name <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                value={data.companyName}
-                onChange={(e) => handleInputChange('companyName', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter company name"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Annual Income (in LPA) <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="number"
-                value={data.annualIncome}
-                onChange={(e) => handleInputChange('annualIncome', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter income"
-                required
-              />
-            </div>
-          </>
-        );
-      case 'not-employed':
-        return (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Annual Income (in LPA) <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="number"
-              value={data.annualIncome}
-              onChange={(e) => handleInputChange('annualIncome', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              placeholder="Enter income"
-              required
-            />
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
+const Step2: React.FC = () => {
   return (
-    <div className="space-y-8">
-      <div>
-        {/* Education Section */}
-        <div className="space-y-6 mb-8">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Education</h3>
-          
-          {/* Undergraduate */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Undergraduate College <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                value={data.undergraduateCollege}
-                onChange={(e) => handleInputChange('undergraduateCollege', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter Undergraduate College"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Undergraduate Degree <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                value={data.undergraduateDegree}
-                onChange={(e) => handleInputChange('undergraduateDegree', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter degree"
-                required
-              />
-            </div>
-          </div>
-
-          {/* Postgraduate */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Postgraduate College
-              </label>
-              <input
-                type="text"
-                value={data.postgraduateCollege}
-                onChange={(e) => handleInputChange('postgraduateCollege', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter Postgraduate College"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Postgraduate Degree
-              </label>
-              <input
-                type="text"
-                value={data.postgraduateDegree}
-                onChange={(e) => handleInputChange('postgraduateDegree', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter degree"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Professional Status Section */}
-        <div className="space-y-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Professional Information</h3>
-          
-          {/* Professional Status */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-4">
-              Professional Status <span className="text-red-500">*</span>
-            </label>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <button
-                type="button"
-                onClick={() => handleProfessionalStatusChange('employed')}
-                className={`p-4 rounded-lg border-2 text-left transition-all ${
-                  data.professionalStatus === 'employed'
-                    ? 'border-custom-amber bg-amber-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    data.professionalStatus === 'employed' ? 'bg-custom-amber text-white' : 'bg-gray-100 text-gray-600'
-                  }`}>
-                    💼
-                  </div>
-                  <span className={`font-medium ${
-                    data.professionalStatus === 'employed' ? 'text-amber-900' : 'text-gray-900'
-                  }`}>
-                    Employed
-                  </span>
-                  {data.professionalStatus === 'employed' && (
-                    <div className="ml-auto">
-                      <div className="w-5 h-5 bg-custom-amber rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs">✓</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </button>
-              
-              <button
-                type="button"
-                onClick={() => handleProfessionalStatusChange('business')}
-                className={`p-4 rounded-lg border-2 text-left transition-all ${
-                  data.professionalStatus === 'business'
-                    ? 'border-custom-amber bg-amber-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    data.professionalStatus === 'business' ? 'bg-custom-amber text-white' : 'bg-gray-100 text-gray-600'
-                  }`}>
-                    🏢
-                  </div>
-                  <span className={`font-medium ${
-                    data.professionalStatus === 'business' ? 'text-amber-900' : 'text-gray-900'
-                  }`}>
-                    Business
-                  </span>
-                  {data.professionalStatus === 'business' && (
-                    <div className="ml-auto">
-                      <div className="w-5 h-5 bg-custom-amber rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs">✓</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </button>
-              
-              <button
-                type="button"
-                onClick={() => handleProfessionalStatusChange('not-employed')}
-                className={`p-4 rounded-lg border-2 text-left transition-all ${
-                  data.professionalStatus === 'not-employed'
-                    ? 'border-custom-amber bg-amber-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    data.professionalStatus === 'not-employed' ? 'bg-custom-amber text-white' : 'bg-gray-100 text-gray-600'
-                  }`}>
-                    ❌
-                  </div>
-                  <span className={`font-medium ${
-                    data.professionalStatus === 'not-employed' ? 'text-amber-900' : 'text-gray-900'
-                  }`}>
-                    Not Employed
-                  </span>
-                  {data.professionalStatus === 'not-employed' && (
-                    <div className="ml-auto">
-                      <div className="w-5 h-5 bg-custom-amber rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs">✓</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </button>
-            </div>
-          </div>
-
-          {/* Conditional Fields */}
-          {data.professionalStatus && (
-            <div className="space-y-6">
-              {renderConditionalFields()}
-            </div>
-          )}
-        </div>
-      </div>
+    <div>
+      <h2 className="text-xl font-semibold text-gray-900 mb-4">Step 2</h2>
+      <p className="text-gray-600">Please guide me on what should be included in this step.</p>
     </div>
   );
 };
 
-interface Step3Props {
-  data: any;
-  onChange: (data: any) => void;
-}
-
-const Step3: React.FC<Step3Props> = ({ data, onChange }) => {
+const Step3: React.FC = () => {
   return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Partner Preferences</h2>
-        <div className="space-y-6">
-          {/* Age Range Preference */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-4">
-              Age Range Preference <span className="text-red-500">*</span>
-            </label>
-            <div className="mb-12">
-              <DualRangeSlider
-                min={21}
-                max={50}
-                minValue={data.ageMin}
-                maxValue={data.ageMax}
-                onChange={(min, max) => onChange({ ...data, ageMin: min, ageMax: max })}
-              />
-            </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">
-                Selected range: <span className="font-semibold text-gray-900">{data.ageMin} - {data.ageMax} years</span>
-              </p>
-            </div>
-          </div>
-
-          {/* Income and Height Preferences */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Minimum Income Preference (LPA) <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="number"
-                value={data.minIncome}
-                onChange={(e) => onChange({ ...data, minIncome: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter minimum income in LPA"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Minimum Height Preference (cm) <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="number"
-                value={data.minHeight}
-                onChange={(e) => onChange({ ...data, minHeight: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter minimum height in cm"
-                min="120"
-                required
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+    <div>
+      <h2 className="text-xl font-semibold text-gray-900 mb-4">Step 3</h2>
+      <p className="text-gray-600">This is where the language dropdown will be. Please guide me on the complete structure for this step.</p>
     </div>
   );
 };
@@ -1046,11 +692,13 @@ const Step5: React.FC = () => {
         </div>
 
         {/* Minimum Income Preference */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-2">
-            Minimum Income Preference (LPA) <span className="text-red-500">*</span>
-          </label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Minimum Income Preference */}
           <div>
+            <label className="block text-lg font-medium text-gray-900 mb-2">
+              Minimum Income Preference (LPA) <span className="text-red-500">*</span>
+            </label>
+            <p className="text-sm text-gray-600 mb-3">Enter minimum annual income (LPA) expected in a partner.</p>
             <input
               type="number"
               value={minimumIncome}
@@ -1058,24 +706,29 @@ const Step5: React.FC = () => {
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
               placeholder="Enter minimum income in LPA"
               min="0"
+              step="0.1"
+              required
             />
           </div>
-        </div>
 
-        {/* Minimum Height Preference */}
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-2">
-            Minimum Height Preference (cm) <span className="text-red-500">*</span>
-          </label>
+          {/* Minimum Height Preference */}
           <div>
-            <input
-              type="number"
-              value={minHeight}
-              onChange={(e) => setMinHeight(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-              placeholder="Enter minimum height in cm"
-              min="120"
-            />
+            <label className="block text-lg font-medium text-gray-900 mb-2">
+              Minimum Height Preference (cm) <span className="text-red-500">*</span>
+            </label>
+            <p className="text-sm text-gray-600 mb-3">Enter minimum preferred height (in cm).</p>
+            <div>
+              <input
+                type="number"
+                value={minHeight}
+                onChange={(e) => setMinHeight(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+                placeholder="Enter minimum height in cm"
+                min="120"
+                max="250"
+                required
+              />
+            </div>
           </div>
         </div>
 
@@ -1266,7 +919,10 @@ const VideoVerification: React.FC<VideoVerificationProps> = ({ onComplete, onBac
         {/* Navigation Buttons */}
         <div className="flex items-center justify-between">
           <button
-            onClick={onBack}
+            onClick={() => {
+              setCurrentPage('form');
+              setCurrentStep(7);
+            }}
             className="flex items-center space-x-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -1472,7 +1128,6 @@ const PrivacyCard: React.FC<PrivacyCardProps> = ({
     </div>
   );
 };
-
 // Verification Pending Page
 interface VerificationPendingProps {
   onComplete: () => void;
