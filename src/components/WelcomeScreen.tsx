@@ -98,6 +98,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
               </div>
             ))}
           </div>
+          <p className="text-sm text-gray-600 mt-6 leading-relaxed">
+            We ask for these documents to ensure every profile is genuine and trustworthy. This helps protect you from fake profiles and creates a safe space to meet real, like‑minded people.
+          </p>
         </div>
 
         {/* Protection Explanation */}
