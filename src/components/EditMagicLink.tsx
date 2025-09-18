@@ -520,7 +520,7 @@ const Step5: React.FC = () => {
         {/* Drinking Preference */}
         <div>
           <label className="block text-lg font-medium text-gray-900 mb-4">
-            Drinking Preference <span className="text-red-500">*</span>
+            What should be your partner's drinking preference? <span className="text-red-500">*</span>
           </label>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <SelectionCard
@@ -561,9 +561,8 @@ const Step5: React.FC = () => {
         {/* Views on Having Children */}
         <div>
           <label className="block text-lg font-medium text-gray-900 mb-2">
-            Views on Having Children <span className="text-red-500">*</span>
+            What is your preference about having children? <span className="text-red-500">*</span>
           </label>
-          <p className="text-sm text-gray-600 mb-3">What is your preference about having children?</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <SelectionCard
               id="yes-want-children"
@@ -595,7 +594,7 @@ const Step5: React.FC = () => {
         {/* Open to Pets */}
         <div>
           <label className="block text-lg font-medium text-gray-900 mb-4">
-            Open to Pets
+            Do you see yourself having pets in the future?
           </label>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <SelectionCard
@@ -628,7 +627,7 @@ const Step5: React.FC = () => {
         {/* Willingness to Relocate */}
         <div>
           <label className="block text-lg font-medium text-gray-900 mb-4">
-            Willingness to Relocate
+            Will you be willing to relocate for your partner?
           </label>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <SelectionCard
@@ -661,7 +660,7 @@ const Step5: React.FC = () => {
         {/* Preference on Staying with Parents */}
         <div>
           <label className="block text-lg font-medium text-gray-900 mb-4">
-            Preference on Staying with Parents
+            What is your Preference on Staying with Parents after marriage?
           </label>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <SelectionCard
@@ -696,9 +695,8 @@ const Step5: React.FC = () => {
           {/* Minimum Income Preference */}
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-2">
-              Minimum Income Preference (LPA) <span className="text-red-500">*</span>
+              Enter minimum annual income (LPA) expected in a partner. <span className="text-red-500">*</span>
             </label>
-            <p className="text-sm text-gray-600 mb-3">Enter minimum annual income (LPA) expected in a partner.</p>
             <input
               type="number"
               value={minimumIncome}
@@ -714,9 +712,8 @@ const Step5: React.FC = () => {
           {/* Minimum Height Preference */}
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-2">
-              Minimum Height Preference (cm) <span className="text-red-500">*</span>
+              Enter minimum preferred height (in cm) expected in a partner. <span className="text-red-500">*</span>
             </label>
-            <p className="text-sm text-gray-600 mb-3">Enter minimum preferred height (in cm).</p>
             <div>
               <input
                 type="number"
@@ -735,9 +732,8 @@ const Step5: React.FC = () => {
         {/* Age Range Preference */}
         <div>
           <label className="block text-lg font-medium text-gray-900 mb-2">
-            Age Range Preference <span className="text-red-500">*</span>
+            Select minimum and maximum preferred age. <span className="text-red-500">*</span>
           </label>
-          <p className="text-sm text-gray-600 mb-3">Select minimum and maximum preferred age.</p>
           <div className="w-full">
             <DualRangeSlider
               min={21}
