@@ -107,21 +107,6 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
           </div>
         </div>
 
-        {/* Documents Section */}
-        <div className="mb-8 bg-white rounded-xl p-8 shadow-sm">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">During onboarding, you'll be asked for:</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {requiredDocuments.map((doc, index) => (
-              <div key={index} className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <doc.icon className="w-4 h-4 text-custom-amber" />
-                </div>
-                <span className="text-gray-700 font-medium">{doc.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Start Button */}
         <div className="text-center mb-16">
           <button
