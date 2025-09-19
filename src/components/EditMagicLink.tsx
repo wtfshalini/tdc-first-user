@@ -187,4 +187,4 @@ const Step1: React.FC = () => {
     email: '',
     phoneNumber: '',
     dateOfBirth: '',
-    height
+    height: ''
