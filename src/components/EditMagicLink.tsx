@@ -504,6 +504,9 @@ const Step4: React.FC = () => {
 
 const Step5: React.FC = () => {
   const [drinkingPreference, setDrinkingPreference] = useState('');
+  const [partnerDrinkingPreference, setPartnerDrinkingPreference] = useState('');
+  const [partnerSmokingPreference, setPartnerSmokingPreference] = useState('');
+  const [partnerChildrenViews, setPartnerChildrenViews] = useState('');
   const [viewsOnChildren, setViewsOnChildren] = useState('');
   const [openToPets, setOpenToPets] = useState('');
   const [willingnessToRelocate, setWillingnessToRelocate] = useState('');
