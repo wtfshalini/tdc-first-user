@@ -871,3 +871,12 @@ const VideoVerification: React.FC<VideoVerificationProps> = ({ onComplete, onBac
                   )}
                 </button>
               </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default EditMagicLink;
