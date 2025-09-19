@@ -136,3 +136,37 @@ const EditMagicLink: React.FC<EditMagicLinkProps> = ({ onComplete }) => {
           {currentStep === 2 && <Step2 />}
           {currentStep === 3 && <Step3 />}
           {currentStep === 4 && <Step4 />}
+          {currentStep === 5 && <Step5 />}
+          {currentStep === 6 && <Step6 />}
+          {currentStep === 7 && <Step7 />}
+        </div>
+
+        {/* Navigation */}
+        <div className="flex justify-between items-center">
+          <button
+            onClick={handlePrevious}
+            disabled={currentStep === 1}
+            className={`flex items-center px-6 py-3 rounded-lg font-medium ${
+              currentStep === 1
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Previous
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="flex items-center px-6 py-3 bg-custom-amber text-white rounded-lg font-medium hover:bg-amber-600"
+          >
+            {currentStep === totalSteps ? 'Complete' : 'Next'}
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default EditMagicLink;
