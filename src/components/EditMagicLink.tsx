@@ -494,6 +494,10 @@ const Step3: React.FC = () => {
 };
 
 const Step4: React.FC = () => {
+  const drinkingOptions = ['Never', 'Socially', 'Regularly', 'Occasionally'];
+  const smokingOptions = ['Doesn\'t Smoke', 'Smoker', 'Smokes Occasionally', 'Vaping Only', 'Trying to Quit'];
+  const childrenOptions = ['Want Children', 'Don\'t Want Children', 'Open to Discussion', 'Already Have Children'];
+
   return (
     <div>
       <h2 className="text-xl font-semibold text-gray-900 mb-4">Step 4</h2>
@@ -504,9 +508,6 @@ const Step4: React.FC = () => {
 
 const Step5: React.FC = () => {
   const [drinkingPreference, setDrinkingPreference] = useState('');
-  const [partnerDrinkingPreference, setPartnerDrinkingPreference] = useState('');
-  const [partnerSmokingPreference, setPartnerSmokingPreference] = useState('');
-  const [partnerChildrenViews, setPartnerChildrenViews] = useState('');
   const [viewsOnChildren, setViewsOnChildren] = useState('');
   const [openToPets, setOpenToPets] = useState('');
   const [willingnessToRelocate, setWillingnessToRelocate] = useState('');
