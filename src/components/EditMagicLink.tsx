@@ -1,85 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Mail, Video, Camera, Shield, AlertCircle, Coffee, Ban, Wine, Users, Baby, X, MessageCircle, Home, Plane, UserCheck, Target } from 'lucide-react';
 
-// Step Components
-const Step1: React.FC = () => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Basic Details</h2>
-    <p>Step 1 content goes here</p>
-  </div>
-);
-
-const Step2: React.FC = () => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Work & Education</h2>
-    <p>Step 2 content goes here</p>
-  </div>
-);
-
-const Step3: React.FC = () => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Background</h2>
-    <p>Step 3 content goes here</p>
-  </div>
-);
-
-const Step4: React.FC = () => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Lifestyle & Personality</h2>
-    <p>Step 4 content goes here</p>
-  </div>
-);
-
-const Step5: React.FC = () => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Partner Preferences</h2>
-    <p>Step 5 content goes here</p>
-  </div>
-);
-
-const Step6: React.FC = () => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Photos</h2>
-    <p>Step 6 content goes here</p>
-  </div>
-);
-
-const Step7: React.FC = () => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Verification</h2>
-    <p>Step 7 content goes here</p>
-  </div>
-);
-
-// Additional Components
-const VideoVerification: React.FC<{ onComplete: () => void; onBack: () => void }> = ({ onComplete }) => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Video Verification</h2>
-    <button onClick={onComplete} className="bg-custom-amber text-white px-4 py-2 rounded">Complete</button>
-  </div>
-);
-
-const MagicLinkSettings: React.FC<{ onComplete: () => void }> = ({ onComplete }) => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Magic Link Settings</h2>
-    <button onClick={onComplete} className="bg-custom-amber text-white px-4 py-2 rounded">Complete</button>
-  </div>
-);
-
-const VerificationPending: React.FC<{ onComplete: () => void; setCurrentPage: (page: string) => void }> = ({ onComplete }) => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Verification Pending</h2>
-    <button onClick={onComplete} className="bg-custom-amber text-white px-4 py-2 rounded">Complete</button>
-  </div>
-);
-
-const VerificationCompleteScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => (
-  <div>
-    <h2 className="text-xl font-semibold mb-4">Verification Complete</h2>
-    <button onClick={onComplete} className="bg-custom-amber text-white px-4 py-2 rounded">Continue</button>
-  </div>
-);
-
 interface EditMagicLinkProps {
   onComplete?: () => void;
 }
@@ -220,28 +141,38 @@ const EditMagicLink: React.FC<EditMagicLinkProps> = ({ onComplete }) => {
           {currentStep === 7 && <Step7 />}
         </div>
 
-        {/* Navigation */}
-        <div className="flex justify-between items-center">
+        {/* Navigation Buttons */}
+        <div className="flex items-center justify-between">
           <button
             onClick={handlePrevious}
             disabled={currentStep === 1}
-            className={`flex items-center px-6 py-3 rounded-lg font-medium ${
+            className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-colors ${
               currentStep === 1
                 ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Previous
+            <ArrowLeft className="w-4 h-4" />
+            <span>Previous</span>
           </button>
 
-          <button
-            onClick={handleNext}
-            className="flex items-center px-6 py-3 bg-custom-amber text-white rounded-lg font-medium hover:bg-amber-600"
-          >
-            {currentStep === totalSteps ? 'Complete' : 'Next'}
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </button>
+          {currentStep < totalSteps ? (
+            <button
+              onClick={handleNext}
+              className="flex items-center space-x-2 px-6 py-3 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium"
+            >
+              <span>Next</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <button
+              onClick={handleNext}
+              className="flex items-center space-x-2 px-6 py-3 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium"
+            >
+              <Check className="w-4 h-4" />
+              <span>Save</span>
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -249,3 +180,14 @@ const EditMagicLink: React.FC<EditMagicLinkProps> = ({ onComplete }) => {
 };
 
 export default EditMagicLink;
+// Placeholder step components - you can guide me on what each should contain
+const Step1: React.FC = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    dateOfBirth: '',
+    height: ''
+  });
+};
