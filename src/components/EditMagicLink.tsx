@@ -179,6 +179,7 @@ const EditMagicLink: React.FC<EditMagicLinkProps> = ({ onComplete }) => {
   );
 };
 
+export default EditMagicLink;
 // Placeholder step components - you can guide me on what each should contain
 const Step1: React.FC = () => {
   const [formData, setFormData] = useState({
