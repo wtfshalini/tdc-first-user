@@ -135,4 +135,4 @@ const EditMagicLink: React.FC<EditMagicLinkProps> = ({ onComplete }) => {
           {currentStep === 1 && <Step1 />}
           {currentStep === 2 && <Step2 />}
           {currentStep === 3 && <Step3 />}
-          {currentStep === 4 && <Step4
+          {currentStep === 4 && <Step4 />}
