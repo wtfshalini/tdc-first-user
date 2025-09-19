@@ -508,90 +508,127 @@ const Step4: React.FC = () => {
 
 const Step5: React.FC = () => {
   const [drinkingPreference, setDrinkingPreference] = useState('');
+  const [partnerSmokingPreference, setPartnerSmokingPreference] = useState('');
   const [viewsOnChildren, setViewsOnChildren] = useState('');
   const [openToPets, setOpenToPets] = useState('');
   const [willingnessToRelocate, setWillingnessToRelocate] = useState('');
   const [stayingWithParents, setStayingWithParents] = useState('');
   const [minimumIncome, setMinimumIncome] = useState('');
   const [minHeight, setMinHeight] = useState('');
-  const [maxHeight, setMaxHeight] = useState('');
   const [minAge, setMinAge] = useState(21);
-  const [maxAge, setMaxAge] = useState(50);
+  const [maxAge, setMaxAge] = useState(60);
 
   return (
-    <div>
-      <div className="space-y-6">
+    <div className="space-y-8">
         {/* Drinking Preference */}
         <div>
           <label className="block text-lg font-medium text-gray-900 mb-4">
             What should be your partner's drinking preference? <span className="text-red-500">*</span>
           </label>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <SelectionCard
-              id="drinks-regularly"
-              title="Drinks Regularly"
-              icon={Coffee}
-              iconColor="text-custom-amber"
-              selected={drinkingPreference === 'drinks-regularly'}
-              onSelect={() => setDrinkingPreference('drinks-regularly')}
-            />
-            <SelectionCard
-              id="teetotaller"
-              title="Teetotaller"
-              icon={Ban}
-              iconColor="text-custom-amber"
-              selected={drinkingPreference === 'teetotaller'}
-              onSelect={() => setDrinkingPreference('teetotaller')}
-            />
-            <SelectionCard
-              id="drinks-occasionally"
-              title="Drinks Occasionally"
-              icon={Wine}
-              iconColor="text-custom-amber"
-              selected={drinkingPreference === 'drinks-occasionally'}
-              onSelect={() => setDrinkingPreference('drinks-occasionally')}
-            />
-            <SelectionCard
-              id="drinks-socially"
-              title="Drinks Socially"
-              icon={Users}
-              iconColor="text-custom-amber"
-              selected={drinkingPreference === 'drinks-socially'}
-              onSelect={() => setDrinkingPreference('drinks-socially')}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <button
+              onClick={() => setDrinkingPreference('drinks-regularly')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                drinkingPreference === 'drinks-regularly'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Coffee className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Drinks Regularly</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setDrinkingPreference('teetotaller')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                drinkingPreference === 'teetotaller'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Ban className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Teetotaller</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setDrinkingPreference('drinks-occasionally')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                drinkingPreference === 'drinks-occasionally'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Wine className="w-5 h-5 text-custom-amber" />
+                <div>
+                  <div className="font-medium text-gray-900">Drinks</div>
+                  <div className="font-medium text-gray-900">Occasionally</div>
+                </div>
+              </div>
+            </button>
+            <button
+              onClick={() => setDrinkingPreference('drinks-socially')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                drinkingPreference === 'drinks-socially'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Users className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Drinks Socially</span>
+              </div>
+            </button>
           </div>
         </div>
 
         {/* Views on Having Children */}
         <div>
-          <label className="block text-lg font-medium text-gray-900 mb-2">
+          <label className="block text-lg font-medium text-gray-900 mb-4">
             What is your preference about having children? <span className="text-red-500">*</span>
           </label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SelectionCard
-              id="yes-want-children"
-              title="Yes, I want children"
-              icon={Baby}
-              iconColor="text-custom-amber"
-              selected={viewsOnChildren === 'yes-want-children'}
-              onSelect={() => setViewsOnChildren('yes-want-children')}
-            />
-            <SelectionCard
-              id="no-dont-want-children"
-              title="No, I do not want children"
-              icon={X}
-              iconColor="text-custom-amber"
-              selected={viewsOnChildren === 'no-dont-want-children'}
-              onSelect={() => setViewsOnChildren('no-dont-want-children')}
-            />
-            <SelectionCard
-              id="open-to-discussion-children"
-              title="Open to discussion"
-              icon={MessageCircle}
-              iconColor="text-custom-amber"
-              selected={viewsOnChildren === 'open-to-discussion'}
-              onSelect={() => setViewsOnChildren('open-to-discussion')}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <button
+              onClick={() => setViewsOnChildren('yes-want-children')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                viewsOnChildren === 'yes-want-children'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Baby className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Yes, I want children</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setViewsOnChildren('no-dont-want-children')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                viewsOnChildren === 'no-dont-want-children'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <X className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">No, I do not want children</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setViewsOnChildren('open-to-discussion')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                viewsOnChildren === 'open-to-discussion'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <MessageCircle className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Open to discussion</span>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -600,31 +637,46 @@ const Step5: React.FC = () => {
           <label className="block text-lg font-medium text-gray-900 mb-4">
             Do you see yourself having pets in the future?
           </label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SelectionCard
-              id="pets-yes"
-              title="Yes"
-              icon={Check}
-              iconColor="text-custom-amber"
-              selected={openToPets === 'yes'}
-              onSelect={() => setOpenToPets('yes')}
-            />
-            <SelectionCard
-              id="pets-no"
-              title="No"
-              icon={X}
-              iconColor="text-custom-amber"
-              selected={openToPets === 'no'}
-              onSelect={() => setOpenToPets('no')}
-            />
-            <SelectionCard
-              id="pets-open-to-discussion"
-              title="Open to discussion"
-              icon={MessageCircle}
-              iconColor="text-custom-amber"
-              selected={openToPets === 'open-to-discussion'}
-              onSelect={() => setOpenToPets('open-to-discussion')}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <button
+              onClick={() => setOpenToPets('yes')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                openToPets === 'yes'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Check className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Yes</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setOpenToPets('no')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                openToPets === 'no'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <X className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">No</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setOpenToPets('open-to-discussion')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                openToPets === 'open-to-discussion'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <MessageCircle className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Open to discussion</span>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -633,31 +685,46 @@ const Step5: React.FC = () => {
           <label className="block text-lg font-medium text-gray-900 mb-4">
             Will you be willing to relocate for your partner?
           </label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SelectionCard
-              id="relocate-yes"
-              title="Yes"
-              icon={Plane}
-              iconColor="text-custom-amber"
-              selected={willingnessToRelocate === 'yes'}
-              onSelect={() => setWillingnessToRelocate('yes')}
-            />
-            <SelectionCard
-              id="relocate-no"
-              title="No"
-              icon={Home}
-              iconColor="text-custom-amber"
-              selected={willingnessToRelocate === 'no'}
-              onSelect={() => setWillingnessToRelocate('no')}
-            />
-            <SelectionCard
-              id="relocate-open-to-discussion"
-              title="Open to discussion"
-              icon={MessageCircle}
-              iconColor="text-custom-amber"
-              selected={willingnessToRelocate === 'open-to-discussion'}
-              onSelect={() => setWillingnessToRelocate('open-to-discussion')}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <button
+              onClick={() => setWillingnessToRelocate('yes')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                willingnessToRelocate === 'yes'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Plane className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Yes</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setWillingnessToRelocate('no')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                willingnessToRelocate === 'no'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Home className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">No</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setWillingnessToRelocate('open-to-discussion')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                willingnessToRelocate === 'open-to-discussion'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <MessageCircle className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Open to discussion</span>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -666,37 +733,51 @@ const Step5: React.FC = () => {
           <label className="block text-lg font-medium text-gray-900 mb-4">
             What is your Preference on Staying with Parents after marriage?
           </label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <SelectionCard
-              id="parents-yes"
-              title="Yes"
-              icon={UserCheck}
-              iconColor="text-custom-amber"
-              selected={stayingWithParents === 'yes'}
-              onSelect={() => setStayingWithParents('yes')}
-            />
-            <SelectionCard
-              id="parents-no"
-              title="No"
-              icon={Home}
-              iconColor="text-custom-amber"
-              selected={stayingWithParents === 'no'}
-              onSelect={() => setStayingWithParents('no')}
-            />
-            <SelectionCard
-              id="parents-open-to-discussion"
-              title="Open to discussion"
-              icon={MessageCircle}
-              iconColor="text-custom-amber"
-              selected={stayingWithParents === 'open-to-discussion'}
-              onSelect={() => setStayingWithParents('open-to-discussion')}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <button
+              onClick={() => setStayingWithParents('yes')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                stayingWithParents === 'yes'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <UserCheck className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Yes</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setStayingWithParents('no')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                stayingWithParents === 'no'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Home className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">No</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setStayingWithParents('open-to-discussion')}
+              className={`p-4 border rounded-lg text-left transition-all ${
+                stayingWithParents === 'open-to-discussion'
+                  ? 'border-custom-amber bg-amber-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <MessageCircle className="w-5 h-5 text-custom-amber" />
+                <span className="font-medium text-gray-900">Open to discussion</span>
+              </div>
+            </button>
           </div>
         </div>
 
-        {/* Minimum Income Preference */}
+        {/* Income and Height Preferences */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Minimum Income Preference */}
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-2">
               Enter minimum annual income (LPA) expected in a partner. <span className="text-red-500">*</span>
@@ -705,54 +786,108 @@ const Step5: React.FC = () => {
               type="number"
               value={minimumIncome}
               onChange={(e) => setMinimumIncome(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent text-gray-500"
               placeholder="Enter minimum income in LPA"
               min="0"
               step="0.1"
               required
             />
           </div>
-
-          {/* Minimum Height Preference */}
           <div>
             <label className="block text-lg font-medium text-gray-900 mb-2">
               Enter minimum preferred height (in cm) expected in a partner. <span className="text-red-500">*</span>
             </label>
-            <div>
-              <input
-                type="number"
-                value={minHeight}
-                onChange={(e) => setMinHeight(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent"
-                placeholder="Enter minimum height in cm"
-                min="120"
-                max="250"
-                required
-              />
-            </div>
+            <input
+              type="number"
+              value={minHeight}
+              onChange={(e) => setMinHeight(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-custom-amber focus:border-transparent text-gray-500"
+              placeholder="Enter minimum height in cm"
+              min="120"
+              max="250"
+              required
+            />
           </div>
         </div>
 
         {/* Age Range Preference */}
         <div>
-          <label className="block text-lg font-medium text-gray-900 mb-2">
+          <label className="block text-lg font-medium text-gray-900 mb-4">
             Select minimum and maximum preferred age. <span className="text-red-500">*</span>
           </label>
-          <div className="w-full">
-            <DualRangeSlider
-              min={21}
-              max={60}
-              minValue={minAge}
-              maxValue={maxAge}
-              onChange={(min, max) => {
-                setMinAge(min);
-                setMaxAge(max);
-              }}
-              label="years"
-            />
+          <div className="space-y-4">
+            <div className="relative">
+              <div className="flex items-center justify-between mb-4">
+                <div className="bg-custom-green text-white px-3 py-1 rounded text-sm font-medium">
+                  {minAge} years
+                </div>
+                <div className="bg-custom-green text-white px-3 py-1 rounded text-sm font-medium">
+                  {maxAge} years
+                </div>
+              </div>
+              <div className="relative h-2 bg-gray-200 rounded-full">
+                <div 
+                  className="absolute h-2 bg-custom-amber rounded-full"
+                  style={{
+                    left: `${((minAge - 21) / (60 - 21)) * 100}%`,
+                    width: `${((maxAge - minAge) / (60 - 21)) * 100}%`
+                  }}
+                />
+                <input
+                  type="range"
+                  min={21}
+                  max={60}
+                  value={minAge}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    if (value <= maxAge) {
+                      setMinAge(value);
+                    }
+                  }}
+                  className="absolute w-full h-2 bg-transparent appearance-none cursor-pointer slider"
+                  style={{ zIndex: 2 }}
+                />
+                <input
+                  type="range"
+                  min={21}
+                  max={60}
+                  value={maxAge}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    if (value >= minAge) {
+                      setMaxAge(value);
+                    }
+                  }}
+                  className="absolute w-full h-2 bg-transparent appearance-none cursor-pointer slider"
+                  style={{ zIndex: 2 }}
+                />
+                <div 
+                  className="absolute w-4 h-4 bg-white border-2 border-custom-amber rounded-full cursor-pointer"
+                  style={{
+                    left: `calc(${((minAge - 21) / (60 - 21)) * 100}% - 8px)`,
+                    top: '-6px'
+                  }}
+                />
+                <div 
+                  className="absolute w-4 h-4 bg-white border-2 border-custom-amber rounded-full cursor-pointer"
+                  style={{
+                    left: `calc(${((maxAge - 21) / (60 - 21)) * 100}% - 8px)`,
+                    top: '-6px'
+                  }}
+                />
+              </div>
+              <div className="flex justify-between text-sm text-gray-500 mt-2">
+                <span>21</span>
+                <span>60</span>
+              </div>
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+              <span className="text-custom-amber font-medium">
+                Selected Age Range: {minAge} - {maxAge} years
+              </span>
+            </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };
