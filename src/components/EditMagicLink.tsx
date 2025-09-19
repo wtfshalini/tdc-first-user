@@ -1,6 +1,85 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, Check, Mail, Video, Camera, Shield, AlertCircle, Coffee, Ban, Wine, Users, Baby, X, MessageCircle, Home, Plane, UserCheck, Target } from 'lucide-react';
 
+// Step Components
+const Step1: React.FC = () => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Basic Details</h2>
+    <p>Step 1 content goes here</p>
+  </div>
+);
+
+const Step2: React.FC = () => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Work & Education</h2>
+    <p>Step 2 content goes here</p>
+  </div>
+);
+
+const Step3: React.FC = () => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Background</h2>
+    <p>Step 3 content goes here</p>
+  </div>
+);
+
+const Step4: React.FC = () => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Lifestyle & Personality</h2>
+    <p>Step 4 content goes here</p>
+  </div>
+);
+
+const Step5: React.FC = () => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Partner Preferences</h2>
+    <p>Step 5 content goes here</p>
+  </div>
+);
+
+const Step6: React.FC = () => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Photos</h2>
+    <p>Step 6 content goes here</p>
+  </div>
+);
+
+const Step7: React.FC = () => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Verification</h2>
+    <p>Step 7 content goes here</p>
+  </div>
+);
+
+// Additional Components
+const VideoVerification: React.FC<{ onComplete: () => void; onBack: () => void }> = ({ onComplete }) => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Video Verification</h2>
+    <button onClick={onComplete} className="bg-custom-amber text-white px-4 py-2 rounded">Complete</button>
+  </div>
+);
+
+const MagicLinkSettings: React.FC<{ onComplete: () => void }> = ({ onComplete }) => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Magic Link Settings</h2>
+    <button onClick={onComplete} className="bg-custom-amber text-white px-4 py-2 rounded">Complete</button>
+  </div>
+);
+
+const VerificationPending: React.FC<{ onComplete: () => void; setCurrentPage: (page: string) => void }> = ({ onComplete }) => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Verification Pending</h2>
+    <button onClick={onComplete} className="bg-custom-amber text-white px-4 py-2 rounded">Complete</button>
+  </div>
+);
+
+const VerificationCompleteScreen: React.FC<{ onComplete: () => void }> = ({ onComplete }) => (
+  <div>
+    <h2 className="text-xl font-semibold mb-4">Verification Complete</h2>
+    <button onClick={onComplete} className="bg-custom-amber text-white px-4 py-2 rounded">Continue</button>
+  </div>
+);
+
 interface EditMagicLinkProps {
   onComplete?: () => void;
 }
