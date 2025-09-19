@@ -849,4 +849,25 @@ const VideoVerification: React.FC<VideoVerificationProps> = ({ onComplete, onBac
               </div>
             ) : (
               <div className="space-y-4">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                  <Check className="w-8 h-8 text-green-600" />
+                </div>
+                <p className="text-green-600 font-medium text-lg">Recording completed successfully!</p>
+                <button
+                  onClick={handleUpload}
+                  disabled={isUploading}
+                  className="px-8 py-4 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium flex items-center space-x-3 mx-auto text-lg disabled:opacity-50"
+                >
+                  {isUploading ? (
+                    <>
+                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Uploading...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Video className="w-6 h-6" />
+                      <span>Upload Video</span>
+                    </>
+                  )}
+                </button>
+              </div>
