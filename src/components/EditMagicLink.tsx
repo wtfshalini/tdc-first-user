@@ -880,3 +880,96 @@ const VideoVerification: React.FC<VideoVerificationProps> = ({ onComplete, onBac
 };
 
 export default EditMagicLink;
+
+// SelectionCard Component
+interface SelectionCardProps {
+  id: string;
+  title: string;
+  icon: React.ComponentType<{ className?: string }>;
+  iconColor: string;
+  selected: boolean;
+  onSelect: () => void;
+}
+
+const SelectionCard: React.FC<SelectionCardProps> = ({ id, title, icon: Icon, iconColor, selected, onSelect }) => {
+  return (
+    <div
+      onClick={onSelect}
+      className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+        selected
+          ? 'border-custom-amber bg-amber-50'
+          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+      }`}
+    >
+      <div className="flex flex-col items-center space-y-3">
+        <Icon className={`w-8 h-8 ${iconColor}`} />
+        <span className={`text-sm font-medium text-center ${
+          selected ? 'text-custom-amber' : 'text-gray-700'
+        }`}>
+          {title}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+// DualRangeSlider Component
+interface DualRangeSliderProps {
+  min: number;
+  max: number;
+  minValue: number;
+  maxValue: number;
+  onChange: (min: number, max: number) => void;
+  label: string;
+}
+
+const DualRangeSlider: React.FC<DualRangeSliderProps> = ({ min, max, minValue, maxValue, onChange, label }) => {
+  const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (value <= maxValue) {
+      onChange(value, maxValue);
+    }
+  };
+
+  const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (value >= minValue) {
+      onChange(minValue, value);
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-medium text-gray-700">
+          {minValue} {label}
+        </span>
+        <span className="text-sm font-medium text-gray-700">
+          {maxValue} {label}
+        </span>
+      </div>
+      <div className="relative">
+        <input
+          type="range"
+          min={min}
+          max={max}
+          value={minValue}
+          onChange={handleMinChange}
+          className="absolute w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider-thumb"
+        />
+        <input
+          type="range"
+          min={min}
+          max={max}
+          value={maxValue}
+          onChange={handleMaxChange}
+          className="absolute w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider-thumb"
+        />
+      </div>
+      <div className="flex items-center justify-between text-xs text-gray-500">
+        <span>{min} {label}</span>
+        <span>{max} {label}</span>
+      </div>
+    </div>
+  );
+};
