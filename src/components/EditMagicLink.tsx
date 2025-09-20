@@ -1016,6 +1016,135 @@ const VideoVerification: React.FC<VideoVerificationProps> = ({ onComplete, onBac
 
 export default EditMagicLink;
 
+// MagicLinkSettings Component
+interface MagicLinkSettingsProps {
+  onComplete: () => void;
+}
+
+const MagicLinkSettings: React.FC<MagicLinkSettingsProps> = ({ onComplete }) => {
+  return (
+    <div className="flex-1 bg-gray-50 p-4 sm:p-6 lg:p-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 text-left">
+            Magic Link Settings
+          </h1>
+          <p className="text-sm sm:text-base text-gray-600 text-left">
+            Configure your magic link settings and preferences.
+          </p>
+        </div>
+
+        {/* Settings Content */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 mb-8">
+          <p className="text-gray-600">Magic Link Settings content will be implemented here.</p>
+        </div>
+
+        {/* Navigation Button */}
+        <div className="flex justify-end">
+          <button
+            onClick={onComplete}
+            className="flex items-center space-x-2 px-6 py-3 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium"
+          >
+            <Check className="w-4 h-4" />
+            <span>Continue</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// VerificationPending Component
+interface VerificationPendingProps {
+  onComplete: () => void;
+  setCurrentPage: (page: 'form' | 'video-verification' | 'settings' | 'verification' | 'verification-complete') => void;
+}
+
+const VerificationPending: React.FC<VerificationPendingProps> = ({ onComplete }) => {
+  return (
+    <div className="flex-1 bg-gray-50 p-4 sm:p-6 lg:p-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 text-left">
+            Verification Pending
+          </h1>
+          <p className="text-sm sm:text-base text-gray-600 text-left">
+            Your verification is being processed.
+          </p>
+        </div>
+
+        {/* Verification Content */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 mb-8">
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto">
+              <AlertCircle className="w-8 h-8 text-custom-amber" />
+            </div>
+            <p className="text-gray-600">Your verification is being reviewed. This may take a few minutes.</p>
+          </div>
+        </div>
+
+        {/* Navigation Button */}
+        <div className="flex justify-end">
+          <button
+            onClick={onComplete}
+            className="flex items-center space-x-2 px-6 py-3 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium"
+          >
+            <Check className="w-4 h-4" />
+            <span>Continue</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// VerificationCompleteScreen Component
+interface VerificationCompleteScreenProps {
+  onComplete: () => void;
+}
+
+const VerificationCompleteScreen: React.FC<VerificationCompleteScreenProps> = ({ onComplete }) => {
+  return (
+    <div className="flex-1 bg-gray-50 p-4 sm:p-6 lg:p-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 text-left">
+            Verification Complete
+          </h1>
+          <p className="text-sm sm:text-base text-gray-600 text-left">
+            Your verification has been successfully completed.
+          </p>
+        </div>
+
+        {/* Success Content */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 mb-8">
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+              <Check className="w-8 h-8 text-custom-green" />
+            </div>
+            <p className="text-green-600 font-medium">Verification completed successfully!</p>
+            <p className="text-gray-600">You can now proceed to your dashboard.</p>
+          </div>
+        </div>
+
+        {/* Navigation Button */}
+        <div className="flex justify-end">
+          <button
+            onClick={onComplete}
+            className="flex items-center space-x-2 px-6 py-3 bg-custom-green text-white rounded-lg hover:bg-opacity-90 transition-colors font-medium"
+          >
+            <span>Go to Dashboard</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // SelectionCard Component
 interface SelectionCardProps {
   id: string;
